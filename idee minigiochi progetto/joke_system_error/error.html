@@ -1,0 +1,101 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<meta name="Author" content="Brian Gosselin">
+<title>JavaScript Error</title>
+
+<style type="text/css">
+
+body{
+background-color:white;
+font-size:10pt;
+font-family:sans-serif;
+color:#00436e;
+}
+
+</style>
+
+<script language="javascript">
+
+function chngimg(n){
+if(n){
+document.images['fst'].src="yesbut.gif";
+document.images['sec'].src="blnkbut.gif";
+}else{
+document.images['sec'].src="yesbut.gif";
+document.images['fst'].src="blnkbut.gif";
+}}
+
+</script>
+
+</head>
+
+<body>
+
+<center>
+
+<h1>Joke Error Message</h1>
+
+<table border="1"  background="blnkbut.gif"  rows="1"><tr><td>
+<img src="bar.gif"><br>
+<img src="triangle.gif">&nbsp;&nbsp;&nbsp;<img src="text.gif"><br>
+<a href="javascript:void(0)" onMouseOver="chngimg(true)"><img src="blnkbut.gif" name="sec" border="0"></a>
+<img src="blnkbut.gif">
+<a href="javascript:alert('Il virus ha preso possesso del tuo PC!')"><img src="nobuttn.gif" border="0"></a>
+<img src="blnkbut.gif">
+<a  href="javascript:chngimg(false)"  onMouseover="chngimg(false)"><img src="yesbut.gif" name="fst" border="0"></a><br>
+</td></tr>
+</table>
+</center>
+
+<br><br><hr><br><br>
+
+<h2>Instructions:</h2>
+
+<form name="SAf">
+
+<br>
+
+<br><br><br>
+1: Copy and paste the following script in the HEAD section of your page:
+<br>
+<a href="javascript:document.forms['SAf'].scripttxt.focus();document.forms['SAf'].scripttxt.select();">Select all...</a>
+<br><br>
+<textarea cols="80" rows="8" wrap="off" name="scripttxt">
+&lt;script language=&quot;javascript&quot;&gt;
+
+function chngimg(n){
+if(n){
+document.images['fst'].src="nobuttn.gif";
+document.images['sec'].src="blnkbut.gif";
+}else{
+document.images['sec'].src="nobuttn.gif";
+document.images['fst'].src="blnkbut.gif";
+}}
+
+&lt;/script&gt;
+</textarea>
+
+<br><br><br>
+2: Copy and paste the following HTML in the BODY section of your page:
+<br>
+<a href="javascript:document.forms['SAf'].bodytxt.focus();document.forms['SAf'].bodytxt.select();">Select all...</a>
+<br><br>
+<textarea cols="80" rows="8"  wrap="off" name="bodytxt">
+<table border="1"  background="blnkbut.gif"  rows="1"><tr><td>
+<img src="bar.gif"><br>
+<img src="triangle.gif">&nbsp;&nbsp;&nbsp;<img src="text.gif"><br>
+<a href="javascript:void(0)" onMouseOver="chngimg(true)"><img src="blnkbut.gif" name="sec" border="0"></a>
+<img src="blnkbut.gif">
+<a href="javascript:alert('Perhaps you need a surgical procedure technically referred to as an Addadicktome')"><img src="yesbut.gif" border="0"></a>
+<img src="blnkbut.gif">
+<a  href="javascript:chngimg(false)"  onMouseover="chngimg(false)"><img src="nobuttn.gif" name="fst" border="0"></a><br>
+</td></tr>
+</table>
+</textarea>
+
+</form>
+
+</body>
+</html>

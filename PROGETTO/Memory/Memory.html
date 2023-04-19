@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <title>Memory</title>
+
+        <meta charset="utf-8">
+
+        <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+
+        <style>
+            table{
+                border-spacing: 10px;
+                margin:auto;
+            }
+        </style>
+
+    </head>
+
+
+    <body>
+
+        <table></table>
+
+        <script type = "text/javascript">
+
+            tab="";
+			for (i=0; i<4;i++){ 
+				tab+="<tr>";
+				for (j=1;j<=6;j++)
+					tab+="<td>"+"<img src='immagini/coperto.gif'>"+"</td>";
+				tab+="</tr>";
+				}
+				
+			$(document).ready(function(){
+				$("table").html(tab);
+			});
+
+        </script>
+
+    </body>
+
+</html>

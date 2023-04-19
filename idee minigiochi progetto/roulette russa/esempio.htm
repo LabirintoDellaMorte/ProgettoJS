@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+
+	<title>Roulette russa - Esempio JavaScript</title>
+	<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Language" content="it" />
+	<meta name="Robots" content="All" />
+	<meta name="Description" content="il sito italiano sul Web publishing" />
+	<meta name="Keywords" content="Un simulatore (e non poteva essere altrimenti) di Roulette Russa." />
+	<meta name="Owner" content="miosito" /> 
+	<meta name="Author" content="miosito" />  
+	<meta name="Copyright" content="miosito" />
+
+
+
+</head>
+<body >
+<br /><br />
+<div align="center">
+
+
+<table border="0" width="350" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img border="0" src="roulette.jpg" width="152" height="216"></td>
+    <td>
+
+<form name="fire">
+Numero di proiettili (1-6):<br><input name="bullets" type="text" size=3 value=1><br>
+
+<p>
+<input name="message" type="button" value="Gira la Roulette!" onClick="fireit()">
+</p>
+
+</form>
+
+<script>
+
+function fireit(){
+var theone=Math.floor(Math.random()*6)
+
+if (theone<=document.fire.bullets.value-1)
+alert("Bang. Morto!")
+else{
+document.fire.message.value="Sei fortunato!"
+setTimeout("document.fire.message.value='Gira la Roulette'",500)
+}
+}
+
+</script>
+
+</td>
+  </tr>
+</table>
+
+
+</div>
+<br /><br />	
+
+</body>
+</html>

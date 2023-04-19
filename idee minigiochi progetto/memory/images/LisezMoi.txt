@@ -1,0 +1,12 @@
+Placez les images un repertoire nommé "images" créé dans le repertoire
+de votre page contenant le jeu.
+Vous pouvez aussi creer vos propres images:
+de "mem_0.gif" à "mem_11.gif" pour les douze images retournées.
+"couple_cache.gif" pour l'image de base.
+La taille des images doit etre de 50x60 pixels.
+Ci-joint l'image de notre site "logo2.gif" que vous pouvez, si vous 
+le desirez, placer dans votre site avec un lien vers le notre 
+(http://www.atide.com/javascript).
+Merci.
+
+______L'éditeur JavaScript : http://www.editeurjavascript.com

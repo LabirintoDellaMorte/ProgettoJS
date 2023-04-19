@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it">
+<head>
+
+	<title>Trova la bomba - Esempio JavaScript</title>
+	<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Language" content="it" />
+	<meta name="Robots" content="All" />
+	<meta name="Description" content="il sito italiano sul Web publishing" />
+	<meta name="Keywords" content="Celebre gioco da oggi in Javascript." />
+	<meta name="Owner" content="miosito" /> 
+	<meta name="Author" content="miosito" />  
+	<meta name="Copyright" content="miosito" />
+
+<script type="text/javascript" language="JavaScript">
+<!--
+var A = -1; var Z = 25;
+
+var left = -1; var right = 5;
+
+var cord = 0; var count = 0;
+
+var secret = 0;
+
+function convert(val)
+
+{
+
+	temp1 = (val-val%5)/5+1;
+
+	temp2 = val%5 + 1;
+
+	return(temp1+","+temp2);
+
+}
+
+function rnd(scale) 
+
+{
+
+	var dd=new Date();
+
+	return((Math.round(Math.abs(Math.sin(dd.getSeconds()))*1000000000)%scale)); 
+
+}
+
+function vmove(val)
+
+{
+
+	if ((cord + val > A) && (cord + val < Z)) {cord += val; document.test.alex[cord].checked = 1;
+
+				if (val==5) {left += 5; right += 5};
+
+				if (val==-5) {left -= 5; right -= 5};
+
+				++count;
+
+				document.test.screen1.value = "   " + count;
+
+				document.test.screen.value = "   " + convert(cord);
+
+				if (cord==bomb) {alert('\n\nYou FOUND the BOMB!\n\nwith '+count+' tries!'); start();}
+
+	}
+
+}
+
+function hmove(val)
+
+{
+
+	if (cord + val < 0) {++secret;
+
+					if (secret == 3) alert('\nThe BOMB @ '+convert(bomb)+'\n');}
+
+	if ((cord + val > left) && (cord + val < right)) {cord += val; document.test.alex[cord].checked = 1;
+
+					++count;
+
+					document.test.screen1.value = "   " + count;
+
+					document.test.screen.value = "   " + convert(cord);
+
+					if (cord==bomb) {alert('\n\nYou FOUND the BOMB!\n\nwith '+count+' tries!'); start();}
+
+	}
+
+}
+
+function start()
+
+{
+
+	cord = 0; count = 0;
+
+	left = -1; right = 5;
+
+	secret = 0;
+
+	document.test.screen1.value = "   0";
+
+	document.test.screen.value = "   1,1";
+
+	document.test.alex[cord].checked = 1;
+
+	bomb = rnd(24);
+
+	if (!bomb) bomb=1;
+
+}
+
+//-->
+</script>
+
+</head>
+<body onLoad="start()">
+<br /><br />
+<div align="center">
+
+<form name="test">
+<table border=10 cellpadding=10><tr><td valign=middle align=center bgcolor="#FFFF00">
+
+<FONT SIZE=7 COLOR="#800000"><I><B>Da BOMB!</B></I></FONT></td></tr>
+
+<tr><td valign=middle align=center>
+
+<table border=10><tr><td valign=middle align=center>
+
+<table border=0 cellpadding=3><tr><td valign=middle align=center>
+
+<input type="radio" name="alex"><input type="radio" name="alex"><input type="radio" name="alex">
+
+<input type="radio" name="alex"><input type="radio" name="alex"><BR>
+
+<input type="radio" name="alex"><input type="radio" name="alex"><input type="radio" name="alex">
+
+<input type="radio" name="alex"><input type="radio" name="alex"><BR>
+
+<input type="radio" name="alex"><input type="radio" name="alex"><input type="radio" name="alex">
+
+<input type="radio" name="alex"><input type="radio" name="alex"><BR>
+
+<input type="radio" name="alex"><input type="radio" name="alex"><input type="radio" name="alex">
+
+<input type="radio" name="alex"><input type="radio" name="alex"><BR>
+
+<input type="radio" name="alex"><input type="radio" name="alex"><input type="radio" name="alex">
+
+<input type="radio" name="alex"><input type="radio" name="alex"></td>
+
+<td></td><td></td><td></td><td></td><td valign=middle align=center><table border=0 cellpadding=3>
+
+<tr><td valign=middle align=center colspan=3><input type="button" value="  Up   " onClick="vmove(-5)"></td></tr>
+
+<tr><td><input type="button" value="  Left  " onClick="hmove(-1)"></td>
+
+<td><input type="text" name="screen" size=4></td>
+
+<td><input type="button" value="Right" onClick="hmove(1)"></td></tr>
+
+<tr><td valign=middle align=center colspan=3><input type="button" value="Down" onClick="vmove(5)"></td></tr>
+
+</table></td></tr></table></td></tr>
+
+</td></tr></table>
+
+<tr><td valign=middle align=center bgcolor="#80FF00">
+
+<B>Usa i bottoni per trovare la bomba</B>
+
+<HR>
+<B># of tries</B>&nbsp<input type="text" name="screen1" size=4>&nbsp&nbsp&nbsp&nbsp&nbsp
+
+</td></tr></table>
+</form>
+
+
+</div>
+<br /><br />
+	
+
+</body>
+</html>

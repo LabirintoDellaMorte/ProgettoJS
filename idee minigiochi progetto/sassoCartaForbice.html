@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Carta, forbice, sasso</title>
+<SCRIPT LANGUAGE="Javascript">
+<!--
+// Copyright (c) 1997 Giulio Orsero 
+//parent.lef.stili();
+// friendly error-handling :)
+function errore(msg,url,line) {
+alert("Giulio ha sbagliato!\n\nTipo errore: " + msg + "\n\nLinea: " + line);
+return true;
+}
+window.onerror = errore;
+function start() {
+ris=0; tuo=0; tuovalue=""; miopunt=0; tuopunt=0; nemopunt=0;
+with (document.f1) {
+miascelta.value=""; txt6.value="";	tuascelta.value="";
+iopunti.value=""; tupunti.value="";	paripunti.value="";
+totprove.value=""; risu.value=""; iopuntiP.value="";
+tupuntiP.value=""; paripuntiP.value="";
+}
+}
+function scrivi() {
+adesso=new Date()
+numeri=adesso.getTime()
+document.f1.txt1.value=numeri
+num=document.f1.txt1.value.charAt(9)
+document.f1.txt2.value=num
+scrivi2()
+}
+function scrivi2() {
+if (num==1 || num==4 || num==7) {
+document.f1.miascelta.value="sasso"
+ris=0
+}
+else if (num==2 || num==5 || num==8) {
+document.f1.miascelta.value="carta"
+ris=1
+}
+else if (num==3 || num==6 || num==9) {
+document.f1.miascelta.value="forbici"
+ris=2
+}
+else if (num==0) {
+scrivi();
+return;
+}
+document.f1.txt4.value=ris;
+if ((ris==0 && tuo==0) || (ris==1 && tuo==1) || (ris==2 && tuo==2)) {
+document.f1.risu.value="pari";
+nemopunt++;
+}
+else if ((ris==0 && tuo==1) || (ris==1 && tuo==2) || (ris==2 && tuo==0)) {
+document.f1.risu.value="hai vinto";
+tuopunt++;
+}
+else if ((ris==0 && tuo==2) || (ris==1 && tuo==0) || (ris==2 && tuo==1)) {
+document.f1.risu.value="ho vinto";
+miopunt++;
+}
+tot=miopunt + tuopunt + nemopunt;
+with (document.f1) {
+txt6.value=tuo;
+tuascelta.value=tuovalue;
+iopunti.value=miopunt;
+tupunti.value=tuopunt;
+paripunti.value=nemopunt;
+totprove.value=miopunt + tuopunt + nemopunt;
+iopuntiP.value=parseInt(miopunt/tot*100) + "%";
+tupuntiP.value=parseInt(tuopunt/tot*100) + "%";
+paripuntiP.value=parseInt(nemopunt/tot*100) + "%";
+totprove.value=miopunt + tuopunt + nemopunt;
+}	
+}
+// -->
+</SCRIPT>
+</head>
+
+<body onLoad="start()">
+<div class=titolo>Morra Cinese</div>
+<div class=testo>
+Questo è il popolare gioco della morra cinese, sasso batte forbici,
+forbici battono carta, carta batte sasso.
+La formula per la generazione di numeri casuali è ancora alquanto
+rudimentale, ma stiate sicuri che non baro!
+<FORM NAME=f1 style="font-size: 8pt;">
+<INPUT TYPE=HIDDEN NAME=txt1 VALUE="">
+<INPUT TYPE=HIDDEN NAME=txt2 VALUE="">
+<INPUT TYPE=BUTTON NAME="bt2" VALUE="Sasso" onClick="tuovalue='sasso';tuo=0;scrivi()">
+<INPUT TYPE=BUTTON NAME="bt3" VALUE="Carta" onClick="tuovalue='carta';tuo=1;scrivi()">
+<INPUT TYPE=BUTTON NAME="bt4" VALUE="Forbici" onClick="tuovalue='forbici';tuo=2;scrivi()">
+<INPUT TYPE=TEXT NAME="tuascelta" SIZE=7 VALUE="">
+<INPUT TYPE=HIDDEN NAME=txt6 VALUE=""><br>
+<B>Io avevo scelto:</B>
+<INPUT TYPE=TEXT NAME="miascelta" SIZE=7 VALUE="">
+<INPUT TYPE=HIDDEN NAME=txt4 VALUE="">
+<B>Risultato:</B>
+<INPUT TYPE=TEXT NAME="risu" SIZE=10 VALUE="">
+<INPUT TYPE=BUTTON NAME="bt5" VALUE="Reset" onClick="start()">
+<br>
+<br><br>
+<div style="width:190; text-align:right;">
+Punteggio:
+<B>Io:</B>
+<INPUT TYPE=TEXT NAME="iopunti" SIZE=3 VALUE="0">
+<INPUT TYPE=TEXT NAME="iopuntiP" SIZE=4 VALUE="0"><br>
+<B>Tu:</B>
+<INPUT TYPE=TEXT NAME="tupunti" SIZE=3 VALUE="0">
+<INPUT TYPE=TEXT NAME="tupuntiP" SIZE=4 VALUE="0"><br>
+<B>Pari:</B>
+<INPUT TYPE=TEXT NAME="paripunti" SIZE=3 VALUE="0">
+<INPUT TYPE=TEXT NAME="paripuntiP" SIZE=4 VALUE="0"><br>
+<B>Prove totali:</B>
+<INPUT TYPE=TEXT NAME="totprove" SIZE=4 VALUE="0">
+</div>
+</FORM>
+</div>
+</body></html>

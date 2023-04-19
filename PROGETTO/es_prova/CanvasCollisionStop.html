@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            canvas {
+
+                background-color: black;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <canvas id="canvas"></canvas>
+
+        <script>
+        var canvas = document.getElementById("canvas");
+        c = canvas.getContext("2d");
+
+        var innerWidth = 800, 
+            innerHeight = 400;
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        //Collision Function
+        function collides(a, b) {
+
+            return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height &&
+                   a.y + a.height > b.y;
+        }
+
+        //Creiamo gli oggetti
+        function object(x, y, width, height, color) {
+            
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
+            this.color = color;
+
+            this.update = function() {
+
+                this.draw();
+            }
+
+            this.draw = function () {
+
+                c.beginPath();
+                c.rect(this.x, this.y, this.width, this.height);
+                c.fillStyle = this.color;
+                c.fill();
+                c.closePath();
+            }
+        }
+
+        var object_1 = new object(100, 175, 50, 50, "#fff");
+        var object_2 = new object(500, 150, 100, 100, "#ff0000");
+
+        //Animate canvas elements
+        function animate() {
+
+            var animation_frame = requestAnimationFrame(animate);
+            c.clearRect(0,0, innerWidth, innerHeight);
+
+            if (collides(object_1, object_2)) {
+
+                object_1.color = "#00ff06";
+                object_2.color = "#ffea00";
+                cancelAnimationFrame(animation_frame);
+            }
+
+            object_1.update();
+            object_1.x += 5;
+
+            object_2.update();
+        }
+        animate();
+        
+        </script>
+    </body>
+
+</html>
+

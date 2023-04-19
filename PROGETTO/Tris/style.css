@@ -1,0 +1,125 @@
+@keyframes gira {
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(360deg)}
+}
+
+body {
+    font-family: "Courier New", sans-serif;
+    background-image: url("Immagini/wp8984735-tic-tac-toe-wallpapers.jpg");
+    background-size: 500px;
+    color: #ECB13D;
+}
+#gioco {
+    margin: auto;
+    width: 610px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 50px 1px rgba(0, 0, 0, 1);
+    background-image: url("Immagini/wp8984729-tic-tac-toe-wallpapers-transformed.jpeg");
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+}
+h1 {
+    text-align: center;
+    font-size: 100px;
+    margin: 20px;
+    text-shadow: 1px 1px 5px black;
+}
+td, th{
+    background-color: #141237;
+    text-align: center;
+    font-size: 50px;
+    border-radius: 10px;
+    transition: 0.2s;
+    font-weight: bold;
+}
+table {
+    margin: auto;
+}
+#turno {
+    height: 100px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.3) inset;
+}
+
+td {
+    width: 200px;
+    height: 200px;
+    padding: 0;
+    margin: 0;
+    max-width: 200px;
+    max-height: 200px;
+    min-width: 200px;
+    min-height: 200px;
+    box-shadow: 3px 3px 6px 1px rgba(0, 0, 0, 0.3) inset;
+    font-size: 150px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /*background-color: rgb(0,0,0);  Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    color: black;
+    font-size: 40px;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%; /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+/* The Close Button */
+#close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close:hover,
+#close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#opzioni {
+    float: left;
+    list-style-type: none;
+    margin-top: 200px;
+}
+
+.opzione {
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #141237;
+    margin: 15px;
+    height: 55px;
+    width: 150px;
+    font-size: 40px;
+    text-align: center;
+    padding-top: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.4);
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;
+}
