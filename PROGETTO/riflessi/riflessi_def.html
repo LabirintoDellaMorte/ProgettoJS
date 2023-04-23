@@ -9,36 +9,42 @@
 <style>
     @font-face {
         font-family: "Riflessi";
-        src: url("Fonts/Race Sport.ttf");
+        src: url("Race Sport.ttf");
     }
 
     body{
         background-image: url("backRiflessi.jpg");
-        background-size: innerWidth + "px " + innerHeight + "px";
+       
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: 100% 60px;
+	    background-size: 100%;
+        background-attachment: fixed;
+        padding: 0;
+        margin: 0;
     }
 
 	h1{
+        margin: 0px;
+        margin-bottom: 7%;
         text-align: center;
         font-family: "Riflessi";
         background-color: yellow;
 	}
     #start{
-        height: 200px;
-        width: 200px;
+        height: 350px;
+        
         margin: auto;
-        margin-top: 40px;
+        
         background-image: url("StartRiflessi.png");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
     #stop{
+        margin: 30px;
         height: 500px;
-        width: 1000px;
-        border: 10px solid yellow;
-        border-radius: 300px;
+        width: 65%;
+        border: 2px solid #2173D8;
         margin: auto;
     }
 </style>
@@ -48,8 +54,8 @@
 
 <body id="pagina">
 
-    <h1>Prova i tuoi riflessi!</h1>
-    <h1>Premi il pulsante per iniziare e premi sul box quando cambia colore</h1>
+    <h1>Prova i tuoi riflessi!<br>Premi il pulsante per iniziare e premi sul box quando cambia colore</h1>
+    
 
     <div id = "stop"></div>
     
@@ -104,6 +110,8 @@
             alert("Il tuo tempo di risposta è: " + tempoDiRisposta + " secondi " + "\n" + remark(tempoDiRisposta));
             schiacciato=false;
             startPressed=false;
+
+            $("#stop").css("backgroundColor", "");
         }
         else{
             if (!startPressed)
