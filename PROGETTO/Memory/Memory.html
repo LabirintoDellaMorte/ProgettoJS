@@ -38,6 +38,11 @@
 				$("table").html(tab);
 			});
 
+            /*
+                vettore con immagini, matrice con immagini totali da mettere nella tabella
+                per ogni immagine del vettore estrarre due volte una posizione casuale nella matrice
+            */
+
 
             //creo vettore con tutte le immagini del memory
             let images = 0;
@@ -45,7 +50,8 @@
                 images[i]="immagini/mem_"+i+".GIF";
             }
 
-            //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, che mi servirà per decidere le immagini nascoste dietro alla tabella
+            //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
+            //che mi servirà per decidere le immagini nascoste dietro alla tabella
             let vettoreGrosso = 0;
                 //inizializzo tutto vettoreGrosso a 0
                 for(let i=0; i<23; i++){
@@ -54,15 +60,17 @@
 
             //inserisco nel vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
             for(let i = 0; i<(images.lenght()*2); i++){
-                estratto = Math.floor(Math.random()*23);
-                if(vettoreGrosso[estratto]==0)vettoreGrosso[estratto]=images[i]; //for sbagliato
+                for(let y = 0; y<2; y++){
+                    posizioneEstratta = Math.floor(Math.random()*23); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
+                    if(vettoreGrosso[posizioneEstratta]==0)vettoreGrosso[estratto]=images[i];
+                }
             }
+
+
             /*
                 vettore con immagini, matrice con immagini totali da mettere nella tabella
-                per ogni immagine del vettore estrarre due volte una posizione casuale nella matrice 
+                per ogni immagine del vettore estrarre due volte una posizione casuale nella matrice
             */
         </script>
-
     </body>
-
 </html>
