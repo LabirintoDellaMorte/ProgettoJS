@@ -25,11 +25,12 @@
 
         <script type = "text/javascript">
 
+            //creazione tabella e comparsa tabella
             tab="";
 			for (i=0; i<4;i++){ 
 				tab+="<tr>";
 				for (j=1;j<=6;j++)
-					tab+="<td>"+"<img src='immagini/coperto.gif'>"+"</td>";
+					tab+="<td>"+"<img id='"+(i*6+j)+"' src='immagini/coperto.gif'>"+"</td>";
 				tab+="</tr>";
 				}
 				
@@ -37,6 +38,29 @@
 				$("table").html(tab);
 			});
 
+
+            //creo vettore con tutte le immagini del memory
+            let images = 0;
+            for(let i = 0; i<11; i++){
+                images[i]="immagini/mem_"+i+".GIF";
+            }
+
+            //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, che mi servirà per decidere le immagini nascoste dietro alla tabella
+            let vettoreGrosso = 0;
+                //inizializzo tutto vettoreGrosso a 0
+                for(let i=0; i<23; i++){
+                    vettoreGrosso[i]=0;
+                }
+
+            //inserisco nella vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
+            for(let i = 0; i<(images.lenght()*2); i++){
+                estratto = Math.floor(Math.random()*23);
+                if(vettoreGrosso[estratto]==0)vettoreGrosso[estratto]=images[i]; //for sbagliato
+            }
+            /*
+                vettore con immagini, matrice con immagini totali da mettere nella tabella
+                per ogni immagine del vettore estrarre due volte una posizione casuale nella matrice
+            */
         </script>
 
     </body>
