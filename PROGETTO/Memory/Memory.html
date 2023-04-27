@@ -74,7 +74,7 @@
 
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
             $("table").on("click", "img", function(event){
-            console.log("cliccato sull'immagine con l'ID:", event.target.id);
+            console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
             let index = parseInt(event.target.id)-1;
             $(event.target).attr("src", vettoreGrosso[index]);
         });
