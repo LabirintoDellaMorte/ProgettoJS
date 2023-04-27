@@ -34,9 +34,16 @@
 				tab+="</tr>";
 				}
 				
-			$(document).ready(function(){
-				$("table").html(tab);
-			});
+		
+            //Funziona!!
+            $(document).ready(function(){
+                $("table").html(tab);
+
+                // Mostra gli id delle celle nella console per verificare la corrispondenza tra vettoreGrosso e la tabella
+                $("td").each(function(index){
+                    console.log($(this).find("img").attr("id"));
+                });
+            });
 
             /*
                 vettore con immagini, matrice con immagini totali da mettere nella tabella
@@ -44,32 +51,33 @@
             */
 
             //creo vettore con tutte le immagini del memory
-            let images = 0;
+            let images = [];
             for(let i = 0; i<11; i++){
-                images[i]="immagini/mem_"+i+".GIF";
+                images[i]="immagini/mem_"+i+".gif";
             }
 
             //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
             //che mi servirà per decidere le immagini nascoste dietro alla tabella
-            let vettoreGrosso = 0;
+            let vettoreGrosso = [];
                 //inizializzo tutto vettoreGrosso a 0
                 for(let i=0; i<23; i++){
-                    vettoreGrosso[i]=0;
+                    vettoreGrosso[i]=null; 
                 }
-
+                
             //inserisco nel vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
-            for(let i = 0; i<(images.length*2); i++){
+            for(let j = 0; j<((images.length)*2); j++){
                 for(let y = 0; y<2; y++){
-                    posizioneEstratta = Math.floor(Math.random()*23); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
-                    if(vettoreGrosso[posizioneEstratta]==0)vettoreGrosso[estratto]=images[i]; //se la posizione estratta non è occupata, inserisco l'immagine nel vettoreGrosso
+                    let posizioneEstratta = Math.floor(Math.random()*23); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
+                    if(vettoreGrosso[posizioneEstratta]==null)vettoreGrosso[posizioneEstratta]=images[j]; //se la posizione estratta non è occupata, inserisco l'immagine nel vettoreGrosso  
                 }
             }
-            
+
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
-            $("img").click(function(event){
-                $(event.delegateTarget).html("<img src='"+ vettoreGrosso[event.target.id] + "'>")
-                alert("ciao")
-            })
+            $("table").on("click", "img", function(event){
+            console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
+            let index = parseInt(event.target.id)-1;
+            $(event.target).attr("src", vettoreGrosso[index]);
+        });
         </script>
     </body>
 </html>
