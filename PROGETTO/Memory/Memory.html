@@ -65,10 +65,11 @@
                 }
                 
             //inserisco nel vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
+            let posizioneEstratta = 0;
             for(let j = 0; j<((images.length)*2); j++){
                 for(let y = 0; y<2; y++){
                     do{
-                        let posizioneEstratta = Math.floor(Math.random()*23); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
+                        posizioneEstratta = Math.floor(Math.random()*23); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
                     }while(vettoreGrosso[posizioneEstratta]==null)
                     
                     vettoreGrosso[posizioneEstratta]=images[j]; //se la posizione estratta non è occupata, inserisco l'immagine nel vettoreGrosso  
