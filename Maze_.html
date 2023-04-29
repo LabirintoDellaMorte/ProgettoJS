@@ -10,48 +10,27 @@
         </style>
     </head>
 
-    <body>
+    <body onload="drawMaze()">
 
         <canvas id="canvas"></canvas>
 
         <script>
-        var canvas = document.getElementById("canvas");
-        c = canvas.getContext("2d");
-
-        var innerWidth = 1200, 
+        var width = 100; // Larghezza desiderata dell'immagine
+        var height = 100; // Altezza desiderata dell'immagine
+        var blockSize = 50;
+        
+        function drawMaze() {
+            
+            var canvas = document.getElementById("canvas");
+            c = canvas.getContext("2d");
+            
+            var innerWidth = 1200, 
             innerHeight = 700;
-        
-        var xImage = -20,
-            yImage = -20;
+            
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
 
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
-
-        var image = new Image();
-        image.src = 'LanzafameMarco_PallaLabirinto.png';
-
-        image.onload = function() {
-            var width = 100; // Larghezza desiderata dell'immagine
-            var height = 100; // Altezza desiderata dell'immagine
-            c.drawImage(image, xImage, yImage, width, height);
-        }
-
-        window.addEventListener('keydown', function(event) {
-            console.log("hswg");
-        if (event.code === 'ArrowUp') {
-        yImage -= 10; // Sposta l'immagine di 10 pixel verso l'alto
-        c.drawImage(image, xImage, yImage, width, height); // Ridisegna l'immagine nel nuovo punto
-        }
-        });
-
-        window.addEventListener('keydown', function(event) {
-        if (event.code === 'ArrowDown') {
-        yImage += 10; // Sposta l'immagine di 10 pixel verso l'alto
-        c.drawImage(image, xImage, yImage, width, height); // Ridisegna l'immagine nel nuovo punto
-        }
-        });
-        
-        var maze = [
+            var maze = [
             [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
             [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0],
             [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
@@ -67,7 +46,7 @@
             [ 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
         ];
 
-        var blockSize = 50;
+        
         
         //Function that creates the squares (stessa funzione usata negli altri due esempi di canvas)
         function object (x, y, width, height, color) {
@@ -147,6 +126,58 @@
 
         //Chiamata alla funzione di aggiornamento
         update();
+
+        var xImage = -20,
+            yImage = -20;
+
+        var image = new Image();
+        image.src = 'LanzafameMarco_PallaLabirinto.png';
+
+        image.onload = function() {
+
+            c.drawImage(image, xImage, yImage, width, height);
+        }
+
+        }
+
+        // Set initial position of the character
+        var player = {
+        x: 0,
+        y: 0
+        };
+
+        // Handle arrow key presses
+        document.addEventListener("keydown", function(event) {
+        switch (event.key) {
+            case "ArrowUp":
+            player.y -= 10;
+            break;
+            case "ArrowDown":
+            player.y += 10;
+            break;
+            case "ArrowLeft":
+            player.x -= 10;
+            break;
+            case "ArrowRight":
+            player.x += 10;
+            break;
+        }
+
+        // Redraw the maze and player
+        drawMaze();
+        drawPlayer();
+        });
+
+        // Draw the player at its current position
+        function drawPlayer() {
+            c.clearRect(player.x, player.y, 70, 70);
+            c.drawImage(image, player.x, player.y, width, height);
+        }
+
+        // Call the function to draw the maze and player
+        drawMaze();
+        drawPlayer();
+
 
         </script>
     </body>
