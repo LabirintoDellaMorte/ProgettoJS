@@ -52,36 +52,43 @@
 
             //creo vettore con tutte le immagini del memory
             let images = [];
-            for(let i = 0; i<11; i++){
+            for(let i = 0; i<12; i++){
                 images[i]="immagini/mem_"+i+".gif";
             }
-
+console.log(images);
             //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
             //che mi servirà per decidere le immagini nascoste dietro alla tabella
             let vettoreGrosso = [];
                 //inizializzo tutto vettoreGrosso a 0
-                for(let i=0; i<23; i++){
-                    vettoreGrosso[i]=null; 
+                for(let i=0; i<24; i++){
+                    vettoreGrosso[i]=0; 
                 }
                 
             //inserisco nel vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
             let posizioneEstratta = 0;
-            for(let j = 0; j<((images.length)*2); j++){
+            for(let j = 0; j<((images.length)); j++){
                 for(let y = 0; y<2; y++){
                     do{
-                        posizioneEstratta = Math.floor(Math.random()*23); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
-                    }while(vettoreGrosso[posizioneEstratta]==null)
-                    
+                        posizioneEstratta = Math.floor(Math.random()*24); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
+  
+                    }while(vettoreGrosso[posizioneEstratta]!=0);
                     vettoreGrosso[posizioneEstratta]=images[j]; //se la posizione estratta non è occupata, inserisco l'immagine nel vettoreGrosso  
                 }
             }
 
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
-            $("table").on("click", "img", function(event){
-            console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
-            let index = parseInt(event.target.id)-1;
-            $(event.target).attr("src", vettoreGrosso[index]);
-        });
+            $("table").on("click", "img", scopri);
+            let evento;
+            function scopri(event){
+                evento = event.target;
+                console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
+                let index = parseInt(event.target.id)-1;
+                $(evento).attr("src", vettoreGrosso[index]);
+            }
+            
+            function ricopri(){
+                $(evento).attr("src", "immagini/coperto.gif");
+            }
         </script>
     </body>
 </html>
