@@ -2,24 +2,59 @@
     <head>
         <title>Carta, forbice, sasso</title>
 
+        <style>
+            body{
 
+                background-color: black;
+                color: white;
+            }
+
+            div{
+                text-align: center;
+            }
+
+            #container1{
+                margin-top: 100px;
+                width: 100%;
+                
+            }
+            #turn{
+                width: 70%;
+            }      
+            
+            #container2{
+                margin-top: 100px;
+                width: 90%;
+                margin: auto;
+                
+            }
+            .butt{
+                width: 30%;                
+            }
+
+        </style>
     </head>
 
-    <body>
-                
-
-        <h1>Sfida Mario a sasso carta forbice!</h1>
-        <p>La sfida è chi arriva per primo a 3 punti, il pareggio non attribuisce nessun punto.</p>
-
+    <body id="body">
+        
+        <div id="container1">
+            <img id='turn' src="gioco/scritte/turnFull.png">
+        </div>
+        
+ 
+        
         <br>
 
-        <button id="sasso">Sasso</button>
-        <button id="carta">Carta</button>
-        <button id="forbice">Forbice</button>
-
+        <div id="container2">
+            <img class='butt' id="sasso" src="gioco/butt/s.png">
+            <img class='butt' id="carta" src="gioco/butt/c.png">
+            <img class='butt' id="forbice" src="gioco/butt/f.png">
+        </div>
+        
+        <div id="space"></div>
         <br>
 
-        <p>Mario ha scelto:</p>
+        <p id="scroll">Mario ha scelto:</p>
         <p id="sceltaMario"></p>
 
         <br>
@@ -40,12 +75,29 @@
         <script type="text/javascript">
             $(document).ready(function () {
 
+                scroll_to('body');
+
+                for(let i=0; i<100; i++){
+                    document.getElementById('space').innerHTML += "<br>"
+                }
+
                 //variabili
                 let sceltaMario;
                 let sceltaUtente;
                 let punteggioMario = 0;
                 let punteggioUtente = 0;
 
+                $('.butt').click(function(){/* al click su un pulsante la pagina si muove verso il basso per vedere il risultato */
+
+                    scroll_to('scroll');
+                })
+
+                function scroll_to(id) {
+
+                    $('html,body').animate({
+                        scrollTop: $('#'+id).offset().top
+                    },'slow');
+                }
                 
                 //---------Assegno un valore alla variabile sceltaUtente in base a quello che l'utente appunto sceglie premento gli appositi bottoni----------
               $("#sasso").click(function(){
@@ -59,7 +111,7 @@
                 })
 
                 //--------------------Scrivo sullo schermo quello che ha scelto mario in base al numero estratto casualmente tra 0,1,2------------------------
-                $("button").click(function(){
+                $(".butt").click(function(){
                     sceltaMario = Math.floor((Math.random()*3));
                     
                     if(sceltaMario == 0){
