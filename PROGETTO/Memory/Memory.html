@@ -55,7 +55,7 @@
             for(let i = 0; i<12; i++){
                 images[i]="immagini/mem_"+i+".gif";
             }
-console.log(images);
+            console.log(images);
             //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
             //che mi servirà per decidere le immagini nascoste dietro alla tabella
             let vettoreGrosso = [];
@@ -78,16 +78,37 @@ console.log(images);
 
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
             $("table").on("click", "img", scopri);
-            let evento;
+            let evento=null, contaScoperti=0, inAttesa=false;
             function scopri(event){
-                evento = event.target;
+                
                 console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
+                
+                //scopro l'immagine cliccata
                 let index = parseInt(event.target.id)-1;
-                $(evento).attr("src", vettoreGrosso[index]);
-            }
-            
-            function ricopri(){
-                $(evento).attr("src", "immagini/coperto.gif");
+                $(event.target).attr("src", vettoreGrosso[index]);
+                
+                if(contaScoperti==0){
+                    evento = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
+                    contaScoperti++; 
+                } 
+                else{
+                    if ($(event.target).attr('src') != $(evento).attr('src')) { // le immagini sono diverse
+
+                        // evitare altri click finché le immagini sono in attesa di essere ricoperte
+                        if (!inAttesa) {
+                            inAttesa = true;
+                            setTimeout(function () {
+                                $(event.target).attr('src', 'immagini/coperto.gif');
+                                $(evento).attr('src', 'immagini/coperto.gif');
+                                inAttesa = false;
+                            }, 2000);
+                        }
+                        else{ //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
+                            contaScoperti = 0;
+                            evento = null;
+                        }
+                    }
+                }
             }
         </script>
     </body>
