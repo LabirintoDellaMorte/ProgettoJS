@@ -15,39 +15,13 @@
         <canvas id="canvas"></canvas>
 
         <script>
-        var width = 100; // Larghezza desiderata dell'immagine
-        var height = 100; // Altezza desiderata dell'immagine
+        // var width = 100; // Larghezza desiderata dell'immagine
+        // var height = 100; // Altezza desiderata dell'immagine
         var blockSize = 50;
         
-        function drawMaze() {
-            
-            var canvas = document.getElementById("canvas");
-            c = canvas.getContext("2d");
-            
-            var innerWidth = 1200, 
-            innerHeight = 700;
-            
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
+        var canvas = document.getElementById("canvas");
+        c = canvas.getContext("2d");
 
-            var maze = [
-            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 0, -1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ -1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-            [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0],
-            [ 1, -1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
-            [ 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, -2],
-            [ 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
-        ];
-
-        
-        
         //Function that creates the squares (stessa funzione usata negli altri due esempi di canvas)
         function object (x, y, width, height, color) {
             
@@ -72,7 +46,39 @@
             }
         }
 
-        var wall=[], enemy=[], win=[];
+        // Set initial position of the character
+        var player = {
+        x: 0,
+        y: 0
+        };
+
+        var playerY_now,
+            playerX_now;
+
+        var wall=[], enemy=[], win=[], player_;
+        
+        function drawMaze() {
+            
+            var innerWidth = 1200,
+            innerHeight = 700;
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+
+            var maze = [
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 0, -1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ -1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+            [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0],
+            [ 1, -1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+            [ 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, -2],
+            [ 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
+        ];
         
         //We loop the maze array and rapresent the 1s as walls
         for (var y = 0; y<maze.length; y++) {
@@ -122,34 +128,22 @@
             updateWalls();
             updateEnemies();
             updateWins();
+            drawPlayer();
+            player_.update();
         }
 
         //Chiamata alla funzione di aggiornamento
         update();
-
-        var xImage = -20,
-            yImage = -20;
-
-        var image = new Image();
-        image.src = 'LanzafameMarco_PallaLabirinto.png';
-
-        image.onload = function() {
-
-            c.drawImage(image, xImage, yImage, width, height);
-        }
-
-        }
-
-        // Set initial position of the character
-        var player = {
-        x: 0,
-        y: 0
-        };
+    }
 
         // Handle arrow key presses
         document.addEventListener("keydown", function(event) {
+
+        playerY_now = player.y;
+        playerX_now = player.x;
+
         switch (event.key) {
-            case "ArrowUp":
+            case "ArrowUp": 
             player.y -= 10;
             break;
             case "ArrowDown":
@@ -163,20 +157,56 @@
             break;
         }
 
+        if (player.x<0) player.x = 0;
+        if (player.y<0) player.y = 0;
+        if (player.x>1150) player.x = playerX_now;
+        if (player.y>650) player.y = playerY_now;
+
         // Redraw the maze and player
         drawMaze();
-        drawPlayer();
+        if (checkCollision(player_, wall, "Hai scontrato un muro, attento!") == true) {
+            player.x = playerX_now;
+            player.y = playerY_now;
+            drawMaze();
+        };
+        if (checkCollision(player_, enemy, "Hai scontrato un nemico, ora gioca bastardo!") == true) {
+            player.x = playerX_now;
+            player.y = playerY_now;
+            drawMaze();
+            location.replace("https://www.google.com");
+        };
+        if (checkCollision(player_, win, "VITTORIAA! IL MIGLIORE!") == true) {
+            player.x = playerX_now;
+            player.y = playerY_now;
+            drawMaze();
+        };
         });
 
         // Draw the player at its current position
         function drawPlayer() {
-            c.clearRect(player.x, player.y, 70, 70);
-            c.drawImage(image, player.x, player.y, width, height);
+            c.clearRect(player.x, player.y, blockSize, blockSize);
+            player_ = new object(player.x, player.y, blockSize, blockSize, "purple");
+        }
+
+        function collides(a, b) {
+
+        return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height &&
+        a.y + a.height > b.y;
+        }
+
+        function checkCollision (player_, wall, message) {
+
+            for (var i=0; i<wall.length; i++) {
+                if (collides(player_, wall[i])) {
+                    alert(message);
+                    return true;
+                }
+            }
         }
 
         // Call the function to draw the maze and player
-        drawMaze();
-        drawPlayer();
+        // drawMaze();
+       // drawPlayer();
 
 
         </script>
