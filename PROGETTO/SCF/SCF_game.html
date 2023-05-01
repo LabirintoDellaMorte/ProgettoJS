@@ -1,12 +1,18 @@
 <html>
     <head>
-        <title>Carta, forbice, sasso</title>
+        <title>Sasso Carta Forbici</title>
 
         <style>
-            body{
 
+            @font-face {
+                font-family: "SCF";
+                src: url("gioco/Fashion Fetish.ttf");
+            }
+            body{
+                font-family: "SCF";
                 background-color: black;
                 color: white;
+                overflow: hidden;
             }
 
             div{
@@ -22,14 +28,31 @@
                 width: 70%;
             }      
             
-            #container2{
-                margin-top: 100px;
+            #container2{                
                 width: 90%;
                 margin: auto;
-                
+                margin-top: 90px;
             }
             .butt{
-                width: 30%;                
+                width: 20%;                
+            }
+
+            #result{
+                text-align: center;
+            }
+
+            #scelte{
+                margin: auto;
+                margin-top: 90px;
+                border-spacing: 50px;
+                border: 6px solid white;
+                border-radius: 30px;
+            }
+
+            #risultato, th, td{
+                font-weight: normal;
+                font-size: 30px;
+                text-align: center;
             }
 
         </style>
@@ -37,49 +60,56 @@
 
     <body id="body">
         
-        <div id="container1">
-            <img id='turn' src="gioco/scritte/turnFull.png">
+        <div id="game">
+            <div id="container1">
+                <img id='turn' src="gioco/scritte/turnFull.png">
+            </div>        
+
+            <br>
+
+            <div id="container2">
+                <img class='butt' id="sasso" src="gioco/butt/s.png">
+                <img class='butt' id="carta" src="gioco/butt/c.png">
+                <img class='butt' id="forbice" src="gioco/butt/f.png">
+            </div>
+
+            <div id="space"></div>
         </div>
-        
- 
-        
-        <br>
 
-        <div id="container2">
-            <img class='butt' id="sasso" src="gioco/butt/s.png">
-            <img class='butt' id="carta" src="gioco/butt/c.png">
-            <img class='butt' id="forbice" src="gioco/butt/f.png">
+        <div id="result">
+            
+            <table id="scelte">
+
+                <tr>
+                    <th>SCELTA DELL'UTENTE</th>
+                    <th>SCELTA DI MARIO</th>                    
+                </tr>
+
+                <tr>
+                    <td><img id="sceltaUtente"></td>
+                    <td><img id="sceltaMario"></td>                    
+                </tr>
+
+                    
+            </table>
+            <br>
+
+            <p id="risultato"></p>
+
+            <br><br>
+
+
+            <img id="reset" src="gioco/butt/restart.png">
         </div>
-        
-        <div id="space"></div>
-        <br>
-
-        <p id="scroll">Mario ha scelto:</p>
-        <p id="sceltaMario"></p>
-
-        <br>
-
-        <p>Risultato:</p>
-        <p id="risultato"></p>
-
-        <br><br>
-
-      
-        <p id="pMario"></p>
-        <p id="pUtente"></p>
-
-        <button id="reset">Ricomincia</button>
-
         
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
 
-                scroll_to('body');
+                for(let i=1; i<50; i++){
 
-                for(let i=0; i<100; i++){
-                    document.getElementById('space').innerHTML += "<br>"
-                }
+                    document.getElementById("space").innerHTML += "<br>";
+                }                    
 
                 //variabili
                 let sceltaMario;
@@ -87,20 +117,13 @@
                 let punteggioMario = 0;
                 let punteggioUtente = 0;
 
-                $('.butt').click(function(){/* al click su un pulsante la pagina si muove verso il basso per vedere il risultato */
+                $('.butt').click(function(){/* al click su un pulsante tutto viene sovrascritto con il risultato*/
 
-                    scroll_to('scroll');
+                    $('#game').remove();
                 })
-
-                function scroll_to(id) {
-
-                    $('html,body').animate({
-                        scrollTop: $('#'+id).offset().top
-                    },'slow');
-                }
                 
                 //---------Assegno un valore alla variabile sceltaUtente in base a quello che l'utente appunto sceglie premento gli appositi bottoni----------
-              $("#sasso").click(function(){
+                $("#sasso").click(function(){
                     sceltaUtente=0;
                 })
                 $("#carta").click(function(){
@@ -112,58 +135,62 @@
 
                 //--------------------Scrivo sullo schermo quello che ha scelto mario in base al numero estratto casualmente tra 0,1,2------------------------
                 $(".butt").click(function(){
-                    sceltaMario = Math.floor((Math.random()*3));
-                    
-                    if(sceltaMario == 0){
-                        $("#sceltaMario").text("Sasso!");
-                    }
-                    else{
-                        if(sceltaMario == 1){
-                            $("#sceltaMario").text("Carta!");
-                        }
-                        else{
-                            if(sceltaMario == 2){
-                                $("#sceltaMario").text("Forbice!");
-                            }
-                        }
-                    }
+
+                    sceltaMario = Math.floor((Math.random()*3));                    
+                    scrivi(sceltaMario, "sceltaMario");
+
+                    scrivi(sceltaUtente, "sceltaUtente");
                     risultato();
                 });
                 
-                
+                function scrivi(scelta, player){
+                    if(scelta == 0){
+                        $("#" + player).attr('src', 'gioco/butt/s.png');
+                    }
+                    else{
+                        if(scelta == 1){
+                            $("#" + player).attr('src', 'gioco/butt/c.png');
+                        }
+                        else{
+                            if(scelta == 2){
+                                $("#" + player).attr('src', 'gioco/butt/f.png');
+                            }
+                        }
+                    }
+                }
                 //--------------------------Determino chi ha vinto in base al valore delle due variabili che ho dichiarato all'inizio------------------------
                 function risultato(){
                     if(sceltaMario == sceltaUtente){
-                        $("#risultato").text("Pareggio!");
+                        $("#risultato").text("PAREGGIO!");
                     }
                     else{
                         if(sceltaMario == 0 && sceltaUtente == 1){
-                            $("#risultato").text("Hai vinto!");
+                            $("#risultato").text("HAI VINTO!");
                             punteggioUtente++;
                         }
                         else{
                             if(sceltaMario == 0 && sceltaUtente == 2){
-                                $("#risultato").text("Ha vinto Mario!");
+                                $("#risultato").text("HAI PERSO!");
                                 punteggioMario++;
                             }
                             else{
                                 if(sceltaMario == 1 && sceltaUtente == 0){
-                                    $("#risultato").text("Ha vinto Mario!");
+                                    $("#risultato").text("HAI PERSO!");
                                     punteggioMario++;
                                 }
                                 else{
                                     if(sceltaMario == 1 && sceltaUtente == 2){
-                                        $("#risultato").text("Hai vinto!");
+                                        $("#risultato").text("HAI VINTO!");
                                         punteggioUtente++;
                                     }
                                     else{
                                         if(sceltaMario == 2 && sceltaUtente == 0){
-                                            $("#risultato").text("Hai vinto!");
+                                            $("#risultato").text("HAI VINTO!");
                                             punteggioUtente++;
                                         }
                                         else{
                                             if(sceltaMario == 2 && sceltaUtente == 1){
-                                                $("#risultato").text("Ha vinto Mario!");
+                                                $("#risultato").text("HAI PERSO!");
                                                 punteggioMario++;
                                             }
                                         }
@@ -172,29 +199,10 @@
                             }
                         }
                     }
-                    $("#pMario").text("Punteggio Mario:"+punteggioMario);
-                    $("#pUtente").text("Tuo punteggio:"+punteggioUtente);
-
-                    //-----------------in base al primo che arriva a tre punti, determino chi ha vinto definitivamente la partita-----------------
-                    if(punteggioMario == 3){
-                        alert("ha vinto Mario :(");
-                    } 
-                    else {
-                        if(punteggioUtente == 3) alert("!HAI VINTO! :)");
-                    }
-
-
-                    //-----------------funzione per azzerare tutto e ripartire da capo come se l'utente aggiornasse la pagina-----------------
+                                        
                     $("#reset").click(function(){
-                        sceltaMario = 0;
-                        sceltaUtente = 0;
-                        punteggioMario = 0;
-                        punteggioUtente = 0;
 
-                        $("#pMario").text("");
-                        $("#pUtente").text("");
-                        $("#risultato").text("");
-                        $("#sceltaMario").text("");
+                        location.reload(true);  /* premendo ricomincia si ricarica la pagina */                        
                     })
                 }
                 
