@@ -1,0 +1,69 @@
+@keyframes zoom-in {
+    0% {
+      transform: scale(1);
+    }
+
+    100% {
+      transform: scale(1.2);
+    }
+}
+@keyframes zoom-out{
+    0% {
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+body{
+    background-color:black;
+    overflow: hidden;
+}
+
+#start-img {
+    width: 400px;
+    height: 200px;
+    position: fixed;
+    top: 40%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 500px;            
+    object-fit: contain;            
+}
+
+table{
+    position: fixed;
+    top: 0; /* su alcuni browser bisogna mettere top: 35% e su altri 0 per tenere la tabella centrata */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#sasso{
+    width: 275px;
+    height: 210px;
+}
+
+#carta{
+    width: 176px;
+    height: 210px;
+}
+
+#forbice{
+    width: 191px;
+    height: 210px;
+}
+
+/* classe per immagini appena create per renderle nascoste */
+img.fade-out {
+  opacity: 0;
+}
+
+/* classe per contrassegnare l'opacità da raggiungere alla fine dell'azione "fade-in" */
+img.fade-in {
+  opacity: 1;
+}

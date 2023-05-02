@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Sasso Carta Forbici</title>
+        
+        <link rel="stylesheet" href="game_style.css">
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="game_script.js"></script>
+        
+    </head>
+
+    <body id="body">
+        
+        <div id="game">
+            <div id="container1">
+                <img id='turn' src="scritte/turnFull.png">
+            </div>        
+
+            <br>
+
+            <div id="container2">
+                <img class='butt' id="sasso" src="butt/s.png">
+                <img class='butt' id="carta" src="butt/c.png">
+                <img class='butt' id="forbice" src="butt/f.png">
+            </div>
+
+            <div id="space"></div>
+        </div>
+
+        <div id="result">
+            
+            <table id="scelte">
+
+                <tr>
+                    <th>SCELTA DELL'UTENTE</th>
+                    <th>SCELTA DI MARIO</th>                    
+                </tr>
+
+                <tr>
+                    <td><img id="sceltaUtente"></td>
+                    <td><img id="sceltaMario"></td>                    
+                </tr>
+
+                    
+            </table>
+            <br>
+
+            <p id="risultato"></p>
+
+            <br><br>
+
+
+            <img id="reset" src="butt/restart.png">
+        </div>
+
+    </body>
+</html>

@@ -2,78 +2,10 @@
 
 <head>
 
-    <style>
-        @keyframes zoom-in {
-            0% {
-              transform: scale(1);
-            }
-        
-            100% {
-              transform: scale(1.2);
-            }
-        }
-        @keyframes zoom-out{
-            0% {
-                transform: scale(1.2);
-            }
-            100%{
-                transform: scale(1);
-            }
-        }
+    <link rel="stylesheet" href="home/home_style.css">
 
-        body{
-            background-color:black;
-            overflow: hidden;
-        }
-        
-        #start-img {
-            width: 400px;
-            height: 200px;
-            position: fixed;
-            top: 40%;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            width: 500px;            
-            object-fit: contain;            
-        }
-
-        table{
-            position: fixed;
-            top: 0; /* su alcuni browser bisogna mettere top: 35% e su altri 0 per tenere la tabella centrata */
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-        }
-        
-        #sasso{
-            width: 275px;
-            height: 210px;
-        }
-
-        #carta{
-            width: 176px;
-            height: 210px;
-        }
-
-        #forbice{
-            width: 191px;
-            height: 210px;
-        }
-
-        /* classe per immagini appena create per renderle nascoste */
-        img.fade-out {
-          opacity: 0;
-        }
-
-        /* classe per contrassegnare l'opacità da raggiungere alla fine dell'azione "fade-in" */
-        img.fade-in {
-          opacity: 1;
-        }
-        
-    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="home/home_script.js"></script>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
 
@@ -81,8 +13,7 @@
 
 <body>
 
-
-    <a href="SCF_game.html"><img id = "start-img" src="home/start.png"></a>
+    <a href="gioco/SCF_game.html"><img id = "start-img" src="home/start.png"></a>
 
     <table>
 
@@ -93,50 +24,6 @@
         </tr>
     </table>
 
-    <script>
-
-        let timer = 120;
-
-        $(document).ready(function(){
-
-            $('img').addClass('fade-out');
-            caricamento();
-
-            $('#start-img').mouseover(function(){
-                $('#start-img').animate({
-                    width: "450px",
-                    height: "250px",
-                },500)
-            })
-
-            $('#start-img').mouseout(function(){
-                $('#start-img').animate({
-                    width: "400px",
-                    height: "200px",
-                },500)
-            })
-
-        })
-
-        function caricamento(){
-            fadeIn('#sasso');
-            fadeIn('#carta');
-            fadeIn('#forbice');
-            timer += 200;   /* solo per fare apparire "start" con un ritardo più alto */
-            fadeIn('#start-img'); 
-        }
-
-        function fadeIn(x){
-                setTimeout(function(){
-                $(x).css('transition', 'opacity 1s ease-in')
-                $(x).removeClass('fade-out');
-                $(x).addClass('fade-in');
-            }, timer)
-
-            timer += timer;
-        }
-        
-    </script>
 </body>
 
 </html>
