@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "Riflessi";
+    src: url("Race Sport.ttf");
+}
+
+body{
+    background-image: url("backRiflessi.jpg");
+   
+    background-repeat: no-repeat;
+    background-position: 100% 60px;
+    background-size: 100%;
+    background-attachment: fixed;
+    padding: 0;
+    margin: 0;
+}
+
+h1{
+    margin: 0px;
+    margin-bottom: 7%;
+    text-align: center;
+    font-family: "Riflessi";
+    background-color: yellow;
+}
+#start{
+    height: 350px;
+    
+    margin: auto;
+    
+    background-image: url("StartRiflessi.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#stop{
+    margin: 30px;
+    height: 500px;
+    width: 65%;
+    border: 2px solid #2173D8;
+    margin: auto;
+}
