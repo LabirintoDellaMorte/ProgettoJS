@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    let bar = new Audio('metalPipe.mp3');
+
     // seleziona il tag body
     const body = document.getElementById("pagina");
 
@@ -72,8 +74,10 @@ $(document).ready(function(){
     }
 
     function randomColor(){
+        bar.play();
         $("#stop").css("backgroundColor", colors[Math.floor((Math.random()*13))]);
         startTime=new Date();
+        
     }
 
     function remark(e){
