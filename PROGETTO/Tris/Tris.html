@@ -39,10 +39,11 @@
 </head>
 
 <body>
+		<p>Sfida <u>Mario</u> a tris! Il riquadro in alto indica di chi è il turno: Mario è un gentiluomo e fare cominciare te per primo, ma vuole essere per forza il simbolo <b>O</b>, quindi tu sarai <b>X</b>.</p>
 
 		<table>
 			<tr>
-				<th colspan="3" id="titolo">X</th>
+				<th colspan="3" id="titolo">Tocca a te!</th>
 			</tr>
 			
 			<tr>
@@ -100,15 +101,15 @@
 		{ 
 			if(e.target.innerHTML=="")
 			{
-				if(titolo.innerHTML=="X") 
+				if(titolo.innerHTML=="Tocca a te!") 
 				{
-					titolo.innerHTML="O";
+					titolo.innerHTML="Tocca a Mario!";
 					e.target.innerHTML="X"
+					setTimeout(turnoMario, 2000);
 				}
 				else 
 				{
-					titolo.innerHTML="X";
-					e.target.innerHTML="O"
+					alert("Non barare! E' il turno di Mario")
 				}
 			}
 			else alert("CELLA GIA' SCELTA!");
@@ -116,7 +117,21 @@
 			checkVittoria();
 			checkPareggio();
 		}
-		
+
+		function turnoMario(){ //turno di Mario
+			let sceltaMario = 0;
+			if(titolo.innerHTML=="Tocca a Mario!"){
+				do{
+					sceltaMario = Math.floor(Math.random()*9);
+				}while(caselle[sceltaMario]=="") //ERRORE QUA!!! HO PROVATO A METTERE != MA SI BLOCCA
+
+				caselle[sceltaMario].innerHTML="O";
+				titolo.innerHTML="Tocca a te!"
+
+				checkVittoria();
+				checkPareggio();
+			}
+		}
 		
 		function checkVittoria() { //controllo condizioni di vittoria e decisione del vincitore, se presente
 			win = false;
@@ -158,8 +173,9 @@
 				}
 			}
 
-			if (win) {
-				alert("VITTORIA DI " + winner + "!"); //alert per vittoria
+			if (win) {//alert per vittoria
+				if(winner == 'X')alert("Hai vinto!");
+				else alert("Ha vinto Mario!");
 			}
 		}
 
@@ -182,7 +198,7 @@
 			}
 		}
 
-		
+
     </script>
 </body>
 </html>
