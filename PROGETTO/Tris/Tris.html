@@ -73,6 +73,7 @@
 		//variabili
 		let caselle = document.getElementsByTagName("td");
 		let titolo = document.getElementById("titolo");
+		let win = false; //variabile utilizzata per controllare se qualcuno ha gia vinto o no (usata anche nel pareggio)
 		
 		
 		//onMouseOver per tutti i td
@@ -113,14 +114,15 @@
 			else alert("CELLA GIA' SCELTA!");
 
 			checkVittoria();
+			checkPareggio();
 		}
 		
 		
-		function checkVittoria() {
-			let win = false;
+		function checkVittoria() { //controllo condizioni di vittoria e decisione del vincitore, se presente
+			win = false;
 			let simbolo = 'X';
 
-			for (let i = 0; i<2; i++) {
+			for (let i = 0; i<2; i++) { 
 				if (i === 1) simbolo = 'O';
 				if (caselle[0].innerHTML === simbolo && caselle[1].innerHTML === simbolo && caselle[2].innerHTML === simbolo) {
 					winner = simbolo;
@@ -157,18 +159,30 @@
 			}
 
 			if (win) {
-				alert("VITTORIA DI " + winner + "!");
+				alert("VITTORIA DI " + winner + "!"); //alert per vittoria
+			}
+		}
+
+		function checkPareggio(){
+			if(!win){
+				let pareggio=true;
+				for (let i in caselle) {
+					if(caselle[i].innerHTML == "")pareggio=false;
+				}
+				if(pareggio)alert("Pareggio!");
 			}
 		}
 
 
-		document.getElementById("reset").onclick = resetTotale;
+		document.getElementById("reset").onclick = resetTotale; //reset
 		
 		function resetTotale() {
 			for (let i in caselle) {
 				caselle[i].innerHTML = "";
 			}
 		}
+
+		
     </script>
 </body>
 </html>
