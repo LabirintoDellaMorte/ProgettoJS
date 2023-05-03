@@ -78,35 +78,36 @@
 
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
             $("table").on("click", "img", scopri);
-            let evento=null, contaScoperti=0, inAttesa=false;
+            let prima=null, contaScoperti=0, inAttesa=false;
+            
             function scopri(event){
                 
                 console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
-                
-                //scopro l'immagine cliccata
-                let index = parseInt(event.target.id)-1;
-                $(event.target).attr("src", vettoreGrosso[index]);
-                
-                if(contaScoperti==0){
-                    evento = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
-                    contaScoperti++; 
-                } 
-                else{
-                    if ($(event.target).attr('src') != $(evento).attr('src')) { // le immagini sono diverse
+                if(!inAttesa){// evitare altri click finché le immagini sono in attesa di essere ricoperte
+                    //scopro l'immagine cliccata
+                    let index = parseInt(event.target.id)-1;
+                    $(event.target).attr("src", vettoreGrosso[index]);
+                    
+                    if(contaScoperti==0){
+                        prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
+                        contaScoperti++; 
+                    } 
+                    else{
 
-                        // evitare altri click finché le immagini sono in attesa di essere ricoperte
-                        if (!inAttesa) {
+                        if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
+    
                             inAttesa = true;
                             setTimeout(function () {
                                 $(event.target).attr('src', 'immagini/coperto.gif');
-                                $(evento).attr('src', 'immagini/coperto.gif');
-                                inAttesa = false;
+                                $(prima).attr('src', 'immagini/coperto.gif');
                             }, 2000);
+                            
+                            inAttesa = false;
                         }
-                        else{ //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
-                            contaScoperti = 0;
-                            evento = null;
-                        }
+                        //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
+                        contaScoperti = 0;
+                        prima = null;
+
                     }
                 }
             }
