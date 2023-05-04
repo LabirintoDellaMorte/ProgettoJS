@@ -123,8 +123,7 @@
 			if(titolo.innerHTML=="Tocca a Mario!"){
 				do{
 					sceltaMario = Math.floor(Math.random()*9);
-					console.log(sceltaMario);
-				}while(caselle[sceltaMario].innerHTML==""); //ERRORE QUA!!! HO PROVATO A METTERE != MA SI BLOCCA
+				}while(caselle[sceltaMario]=="") //ERRORE QUA!!! HO PROVATO A METTERE != MA SI BLOCCA
 
 				caselle[sceltaMario].innerHTML="O";
 				titolo.innerHTML="Tocca a te!"
