@@ -45,11 +45,6 @@
                 });
             });
 
-            /*
-                vettore con immagini, matrice con immagini totali da mettere nella tabella
-                per ogni immagine del vettore estrarre due volte una posizione casuale nella matrice
-            */
-
             //creo vettore con tutte le immagini del memory
             let images = [];
             for(let i = 0; i<12; i++){
@@ -78,39 +73,53 @@
 
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
             $("table").on("click", "img", scopri);
-            let prima=null, contaScoperti=0, inAttesa=false;
+            let prima=0, contaScoperti=0, inAttesa=false, win=false;
             
             function scopri(event){
-                
-                console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
-                if(!inAttesa){// evitare altri click finché le immagini sono in attesa di essere ricoperte
-                    //scopro l'immagine cliccata
-                    let index = parseInt(event.target.id)-1;
-                    $(event.target).attr("src", vettoreGrosso[index]);
+                if($(event.target).attr('src') == 'immagini/coperto.gif'){ //esegue queste operazioni solo se si clicca su un immagine coperta, per evitare errori di click su un immagine già scoperta
+
+                    console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
+                    if(!inAttesa){// evitare altri click finché le immagini sono in attesa di essere ricoperte
+                        
+                        //scopro l'immagine cliccata
+                        let index = parseInt(event.target.id)-1;
+                        $(event.target).attr("src", vettoreGrosso[index]);
+                        
+                        if(contaScoperti==0){
+                            prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
+                            contaScoperti++; 
+                        } 
+                        else{
+
+                            if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
+        
+                                inAttesa = true;
+                                setTimeout(function () {
+                                    $(event.target).attr('src', 'immagini/coperto.gif');
+                                    $(prima).attr('src', 'immagini/coperto.gif');   
+                                    inAttesa = false;
+                                }, 1000);
                     
-                    if(contaScoperti==0){
-                        prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
-                        contaScoperti++; 
-                    } 
-                    else{
-
-                        if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
-    
-                            inAttesa = true;
+                            }
+                            //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
                             setTimeout(function () {
-                                $(event.target).attr('src', 'immagini/coperto.gif');
-                                $(prima).attr('src', 'immagini/coperto.gif');
-                            }, 2000);
-                            
-                            inAttesa = false;
-                        }
-                        //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
-                        contaScoperti = 0;
-                        prima = null;
+                                contaScoperti = 0;
+                                prima = 0;
+                            }, 1001);
 
+                            checkVittoria();
+                        }
                     }
                 }
             }
+
+            function checkVittoria(){
+                let tabella = document.getElementsByTagName("td");
+                for(let i in tabella){
+                    
+                }
+            }
+
         </script>
     </body>
 </html>
