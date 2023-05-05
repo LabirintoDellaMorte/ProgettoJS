@@ -182,13 +182,16 @@
 			}
 		}
 
-		function checkPareggio(){
+		function checkPareggio(){ //quando mario fa l'ultima mossa non funziona, invece funziona se la fa l'utente
 			if(!win){
 				let pareggio=true;
 				for (let i in caselle) {
 					if(caselle[i].innerHTML == "")pareggio=false;
 				}
-				if(pareggio)alert("Pareggio!");
+				if(pareggio){
+					alert("Pareggio!");
+					resetTotale();
+				}
 			}
 		}
 
