@@ -114,12 +114,13 @@
             }
 
             function checkVittoria(){
+                let win = true;
                 let tabella = document.getElementsByTagName("td");
                 for(let i in tabella){
-                    
+                    if($(tabella[i]).html() == "<img id="+(i+1)+" src='immagini/coperto.gif'>")win = false;
                 }
+                if(win) alert("HAI VINTO!!!");
             }
-
         </script>
     </body>
 </html>

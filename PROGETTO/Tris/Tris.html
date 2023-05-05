@@ -39,7 +39,7 @@
 </head>
 
 <body>
-		<p>Sfida <u>Mario</u> a tris! Il riquadro in alto indica di chi è il turno: Mario è un gentiluomo e fare cominciare te per primo, ma vuole essere per forza il simbolo <b>O</b>, quindi tu sarai <b>X</b>.</p>
+		<p>Sfida <u>Mario</u> a tris! Il riquadro in alto indica di chi è il turno: Mario è un gentiluomo e fare cominciare te per primo, ma se perdi comincerà lui. Mario ha il simbolo <b>O</b>, mentre tu <b>X</b>.</p>
 
 		<table>
 			<tr>
@@ -105,7 +105,7 @@
 				{
 					titolo.innerHTML="Tocca a Mario!";
 					e.target.innerHTML="X"
-					setTimeout(turnoMario, 2000);
+					setTimeout(turnoMario, 1500);
 				}
 				else 
 				{
@@ -124,7 +124,7 @@
 				do{
 					sceltaMario = Math.floor(Math.random()*9);
 					console.log(sceltaMario);
-				}while(caselle[sceltaMario].innerHTML==""); //ERRORE QUA!!! HO PROVATO A METTERE != MA SI BLOCCA
+				}while(caselle[sceltaMario].innerHTML!=""); 
 
 				caselle[sceltaMario].innerHTML="O";
 				titolo.innerHTML="Tocca a te!"
@@ -177,8 +177,8 @@
 			if (win) {//alert per vittoria
 				if(winner == 'X')alert("Hai vinto!");
 				else alert("Ha vinto Mario!");
-
 				
+				resetTotale();
 			}
 		}
 
@@ -192,7 +192,6 @@
 			}
 		}
 
-
 		document.getElementById("reset").onclick = resetTotale; //reset
 		
 		function resetTotale() {
@@ -200,8 +199,6 @@
 				caselle[i].innerHTML = "";
 			}
 		}
-
-
     </script>
 </body>
 </html>
