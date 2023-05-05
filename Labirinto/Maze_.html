@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+
+        <style>
+            body {
+                background-color:  white;
+            }
+            canvas {
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: black;
+            }
+            div {
+                margin: auto;
+            }
+
+            .my-custom-font {
+            font-family: 'Helvetica Neue', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            }
+
+        </style>
+    </head>
+
+    <body onload="drawMaze()">
+
+        <div id="canvas-conteiner">
+        <canvas id="canvas"></canvas>
+        </div>
+
+        <script>
+
+        var imageCache = {};
+
+        function loadImage(src) {
+        if (imageCache[src]) {
+            return imageCache[src];
+        } else {
+            var img = new Image();
+            img.src = src;
+            imageCache[src] = img;
+            return img;
+        }
+        }
+            
+        // var width = 100; // Larghezza desiderata dell'immagine
+        // var height = 100; // Altezza desiderata dell'immagine
+        var blockSize = 40;
+        
+        var canvas = document.getElementById("canvas");
+        c = canvas.getContext("2d");
+
+        /*const image_wall = new Image();
+        image_wall.src = "WallTile.png";
+
+        const image_player = new Image();
+        image_player.src = "Player.png";
+
+        const image_enemy = new Image();
+        image_enemy.src = "Enemy.png";
+
+        const image_win = new Image();
+        image_win.src = "Win.png";*/
+
+        const image_wall = loadImage("WallTile.png");
+        const image_player = loadImage("Player.png");
+        const image_enemy = loadImage("Enemy.png");
+        const image_win = loadImage("Win.png");
+
+        //Function that creates the squares (stessa funzione usata negli altri due esempi di canvas)
+        function object (image, x, y, width, height) {
+            
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
+            this.image = image;
+
+            this.update = function() {
+
+                this.draw();
+            }
+
+            this.draw = function () {
+
+                c.drawImage(image, x, y, width, height);
+            }
+        }
+
+        // Set initial position of the character
+        var player = {
+        x: 0,
+        y: 0
+        };
+
+        var playerY_now,
+            playerX_now;
+
+        var wall=[], enemy=[], win=[], player_;
+        
+        function drawMaze() {
+            
+            var innerWidth = 1400,
+            innerHeight = 727;
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+
+            /*const container = document.getElementById('canvas-container');
+            container.appendChild(canvas);
+            const canvasStyle = window.getComputedStyle(canvas);
+            const containerStyle = window.getComputedStyle(container);
+            const canvasWidth = parseInt(canvasStyle.width);
+            const canvasHeight = parseInt(canvasStyle.height);
+            const containerWidth = parseInt(containerStyle.width);
+            const containerHeight = parseInt(containerStyle.height);
+
+            canvas.style.position = 'absolute';
+            canvas.style.left = (containerWidth - canvasWidth) / 2 + 'px';
+            canvas.style.top = (containerHeight - canvasHeight) / 2 + 'px';*/
+
+        /*var maze = [
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 0, -1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+            [ 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ -1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
+            [ 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+            [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0],
+            [ 1, -1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
+            [ 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, -2],
+            [ 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
+        ];*/
+
+        let maze = [
+        [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1],
+        [1, 0, 1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, -1, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, -2, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+
+
+        /*let maze = [
+  [0, 1, 0, 1, 0, 0, 0, 1, 1, 1],
+  [0, 0, 0, 1, 1, 1, 0, 0, 0, 1],
+  [1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+  [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+  [1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1, 1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 1, 0, 1, 1, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
+  [-2, 0, 1, 1, 1, 0, 1, 0, 1, 1]
+];*/
+
+
+        
+        //We loop the maze array and rapresent the 1s as walls
+        for (var y = 0; y<maze.length; y++) {
+            for (var x=0; x<maze[y].length; x++) {
+
+                if (maze[y][x] === 1) {
+
+                    //Paint it red of 1s
+                    wall.push(new object(image_wall, x*blockSize, y*blockSize, blockSize, blockSize));
+                }
+                else if (maze[y][x] === -1) {
+
+                    //This can rapresent the goal
+                    enemy.push(new object(image_enemy, x*blockSize, y*blockSize, blockSize, blockSize));
+                }
+                else if (maze[y][x] === -2) {
+
+                    //This can rapresent the win
+                    win.push(new object(image_win, x*blockSize, y*blockSize, blockSize, blockSize));
+                }
+            }
+        }
+
+        //Aggiorna e disegna tutti gli oggetti nell'array walls
+        function updateWalls() {
+            for (var i=0; i<wall.length; i++) {
+                wall[i].update();
+            }
+        }
+        
+        //Aggiorna e disegna tutti gli oggetti nell'array enemies
+        function updateEnemies() {
+            for (var i=0; i<enemy.length; i++) {
+                enemy[i].update();
+            }
+        }
+        
+        //Aggiorna e disegna tutti gli oggetti nell'array wins
+        function updateWins() {
+            for (var i=0; i<win.length; i++) {
+                win[i].update();
+            }
+        }
+        
+        //Aggiorna e disegna tutto
+        function update() {
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            updateWalls();
+            updateEnemies();
+            updateWins();
+            drawPlayer();
+            player_.update();
+           // requestAnimationFrame(update);
+        }
+
+        //Chiamata alla funzione di aggiornamento
+        //requestAnimationFrame(update);
+        update();
+    }
+
+        // Handle arrow key presses
+        document.addEventListener("keydown", function(event) {
+
+        playerY_now = player.y;
+        playerX_now = player.x;
+
+        switch (event.key) {
+            case "ArrowUp": 
+            player.y -= 20;
+            break;
+            case "ArrowDown":
+            player.y += 20;
+            break;
+            case "ArrowLeft":
+            player.x -= 20;
+            break;
+            case "ArrowRight":
+            player.x += 20;
+            break;
+        }
+
+        if (player.x<0) player.x = 0;
+        if (player.y<0) player.y = 0;
+        if (player.x>1150) player.x = playerX_now;
+        if (player.y>650) player.y = playerY_now;
+
+        // Redraw the maze and player
+        drawMaze();
+        if (checkCollision(player_, wall, "Hai scontrato un muro, attento!") == true) {
+            player.x = playerX_now;
+            player.y = playerY_now;
+            drawMaze();
+        };
+        if (checkCollision(player_, enemy, "Hai scontrato un nemico, ora gioca bastardo!") == true) {
+            player.x = playerX_now;
+            player.y = playerY_now;
+            drawMaze();
+            location.replace("https://www.google.com");
+        };
+        if (checkCollision(player_, win, "VITTORIAA! IL MIGLIORE!") == true) {
+            player.x = playerX_now;
+            player.y = playerY_now;
+            drawMaze();
+        };
+        });
+
+        // Draw the player at its current position
+        function drawPlayer() {
+            c.clearRect(player.x, player.y, blockSize, blockSize);
+            player_ = new object(image_player,player.x, player.y, blockSize, blockSize);
+        }
+
+        function collides(a, b) {
+
+        return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height &&
+        a.y + a.height > b.y;
+        }
+
+        function checkCollision (player_, wall, message) {
+
+            for (var i=0; i<wall.length; i++) {
+                if (collides(player_, wall[i])) {
+                    swal({
+                    text: message,
+                    icon: "warning",
+                    customClass: {
+                    text: 'my-custom-font',
+                    },
+                    })
+
+                    return true;
+                }
+            }
+        }
+
+        // Call the function to draw the maze and player
+        // drawMaze();
+       // drawPlayer();
+
+
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    </body>
+</html>
