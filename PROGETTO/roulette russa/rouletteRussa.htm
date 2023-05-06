@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+	<title>Roulette russa - Esempio JavaScript</title>
+		
+
+
+
+	</head>
+	<body >
+		<img src="roulette.jpg">
+		
+
+		<form name="fire">
+			<p>Numero di proiettili (1-6):</p>
+			<input name="bullets" type="text" size=3 value=1>
+
+			<input name="message" type="button" value="Gira la Roulette!" onClick="fireit()">
+		</form>
+
+		<script>
+
+		function fireit(){
+			var giro=Math.floor(Math.random()*6)
+			if(parseInt(document.fire.bullets.value) < 7 && parseInt(document.fire.bullets.value) > 0){
+				
+				if (giro <= document.fire.bullets.value-1) alert("Bang. Morto!");
+				
+				else{
+					document.fire.message.value="Sei fortunato!"
+					setTimeout("document.fire.message.value='Gira la Roulette'",1000)
+				}
+			}
+			else alert("Numero di proiettili invalido!");
+		}
+		</script>
+	</body>
+</html>

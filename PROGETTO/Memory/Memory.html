@@ -45,17 +45,12 @@
                 });
             });
 
-            /*
-                vettore con immagini, matrice con immagini totali da mettere nella tabella
-                per ogni immagine del vettore estrarre due volte una posizione casuale nella matrice
-            */
-
             //creo vettore con tutte le immagini del memory
             let images = [];
             for(let i = 0; i<12; i++){
                 images[i]="immagini/mem_"+i+".gif";
             }
-console.log(images);
+            //console.log(images);
             //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
             //che mi servirà per decidere le immagini nascoste dietro alla tabella
             let vettoreGrosso = [];
@@ -77,11 +72,55 @@ console.log(images);
             }
 
             //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
-            $("table").on("click", "img", function(event){
-            console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
-            let index = parseInt(event.target.id)-1;
-            $(event.target).attr("src", vettoreGrosso[index]);
-        });
+            $("table").on("click", "img", scopri);
+            let prima=0, contaScoperti=0, inAttesa=false, win=false, scoperti = 0;
+            
+            function scopri(event){
+                if($(event.target).attr('src') == 'immagini/coperto.gif'){ //esegue queste operazioni solo se si clicca su un immagine coperta, per evitare errori di click su un immagine già scoperta
+
+                    console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
+                    if(!inAttesa){// evitare altri click finché le immagini sono in attesa di essere ricoperte
+                        
+                        //scopro l'immagine cliccata
+                        let index = parseInt(event.target.id)-1;
+                        $(event.target).attr("src", vettoreGrosso[index]);
+                        
+                        if(contaScoperti==0){
+                            prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
+                            contaScoperti++; 
+                        } 
+                        else{
+
+                            if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
+        
+                                inAttesa = true;
+                                setTimeout(function () {
+                                    $(event.target).attr('src', 'immagini/coperto.gif');
+                                    $(prima).attr('src', 'immagini/coperto.gif');   
+                                    inAttesa = false;
+                                }, 1000);
+                    
+                            }
+                            else scoperti++;
+                            //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
+                            setTimeout(function () {
+                                contaScoperti = 0;
+                                prima = 0;
+                            }, 1001);
+
+                            checkVittoria();
+                        }
+                    }
+                }
+            }
+
+            function checkVittoria(){
+                if(scoperti==12)
+                setTimeout(function () {
+                    alert("HAI VINTO!!!");
+                }, 100);
+               
+            }
         </script>
     </body>
 </html>

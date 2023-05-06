@@ -1,0 +1,50 @@
+@font-face {
+    font-family: "SCF";
+    src: url("Fashion Fetish.ttf");
+}
+body{
+    font-family: "SCF";
+    background-color: black;
+    color: white;
+    overflow: hidden;
+}
+
+div{
+    text-align: center;
+}
+
+#container1{
+    margin-top: 100px;
+    width: 100%;
+    
+}
+#turn{
+    width: 70%;
+}      
+
+#container2{                
+    width: 90%;
+    margin: auto;
+    margin-top: 90px;
+}
+.butt{
+    width: 20%;                
+}
+
+#result{
+    text-align: center;
+}
+
+#scelte{
+    margin: auto;
+    margin-top: 90px;
+    border-spacing: 50px;
+    border: 6px solid white;
+    border-radius: 30px;
+}
+
+#risultato, th, td{
+    font-weight: normal;
+    font-size: 30px;
+    text-align: center;
+}
