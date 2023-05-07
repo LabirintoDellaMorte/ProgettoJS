@@ -11,17 +11,22 @@
 
         <style>
             body{
+                margin: 0;
                 overflow:hidden;
-                background-image: url("sfondo.png");
+                background-image: url("Sfondo.png");
+                box-shadow: inset 0 0 200px 200px;
             }
 
             table{
                 border-spacing: 10px;
-                margin: auto;                
+                margin: 0 auto;
+                /* centrare verticalmente la table */
+                position: relative;
+			    top: 50%;                       /* sposta la tabella verso il basso del 50% della sua altezza originale rispetto alla posizione relativa*/
+			    transform: translateY(-50%);    /* sposta la tabella verso l'alto di metà della sua altezza */
             }
 
             img{
-
                 border-radius: 8px;
             }
 
@@ -67,6 +72,7 @@
 
                     $('#container').width(window.innerWidth);
                     $('#container').height(window.innerHeight);
+                    
                 });
 
                 $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
