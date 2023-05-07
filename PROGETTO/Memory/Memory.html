@@ -132,7 +132,7 @@
                         let index = parseInt(event.target.id)-1;
                         $(event.target).attr("src", vettoreGrosso[index]);
                         
-                        $(event.target).removeClass("card");    //rimuove la classe per fare in modo che le immagini scoperte non si evidenzino all'hover
+                        $(event.target).removeClass("card").off("mouseover");    //rimuove la classe e la possibilità di scatenare l'evento "mouseover" per fare in modo che le immagini scoperte non si evidenzino all'hover
                         
                         if(contaScoperti==0){
                             prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
@@ -144,7 +144,16 @@
 
                                 //riassegna la classe a entrambe le immagini a cui era stata rimossa
                                 $(event.target).addClass('card');   
-                                $(prima).addClass('card');          
+                                $(prima).addClass('card');     
+                                
+                                $(".card").on("mouseover", function(e) {    //riaggiungo l'evento dopo averlo rimosso, nel caso le carte scoperte siano diverse
+                                    $(e.target).css("box-shadow", "0 0 20px 10px red");               
+
+                                    $(e.target).animate({
+                                        width: "95%",
+                                        height: "95%",
+                                    },100)
+                                });
 
                                 inAttesa = true;
                                 setTimeout(function () {
