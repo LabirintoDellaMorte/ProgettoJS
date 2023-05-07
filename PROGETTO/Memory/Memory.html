@@ -12,7 +12,7 @@
         <style>
             body{
                 overflow:hidden;
-                background-image: url("back.jpg");
+                background-image: url("sfondo.png");
             }
 
             table{
@@ -26,7 +26,7 @@
             }
 
             .card{
-                box-shadow: 0 0 40px 10px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */                
+                box-shadow: 0 0 20px 3px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */                
             }
 
             td{
@@ -70,7 +70,7 @@
                 });
 
                 $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
-                    $(e.target).css("box-shadow", "0 0 20px 10px red");               
+                    $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
                     
                     $(e.target).animate({
                         width: "95%",
