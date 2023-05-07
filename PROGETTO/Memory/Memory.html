@@ -20,8 +20,17 @@
                 margin: auto;                
             }
 
+            img{
+
+                border-radius: 8px;
+            }
+
             .card{
-                box-shadow: 0 0 40px 10px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */
+                box-shadow: 0 0 40px 10px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */                
+            }
+
+            td{
+                text-align: center;
             }
             
         </style>
@@ -61,11 +70,21 @@
                 });
 
                 $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
-                    $(e.target).css("box-shadow", "0 0 40px 10px red");
+                    $(e.target).css("box-shadow", "0 0 20px 10px red");               
+                    
+                    $(e.target).animate({
+                        width: "95%",
+                        height: "95%",
+                    },100)
                 });
 
-                $(".card").on("mouseout", function(e) {     //fa tornare i valori di ombra a quelli precedenti
-                    $(e.target).css("box-shadow", "");
+                $(".card").on("mouseout", function(e) {     
+                    $(e.target).css("box-shadow", "");//fa tornare i valori di ombra a quelli precedenti
+
+                    $(e.target).animate({
+                        width: "100%",
+                        height: "100%",
+                    },100)
                 });
                 // Mostra gli id delle celle nella console per verificare la corrispondenza tra vettoreGrosso e la tabella
                 $("td").each(function(index){
@@ -122,7 +141,7 @@
                         else{
 
                             if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
-                                
+
                                 //riassegna la classe a entrambe le immagini a cui era stata rimossa
                                 $(event.target).addClass('card');   
                                 $(prima).addClass('card');          
