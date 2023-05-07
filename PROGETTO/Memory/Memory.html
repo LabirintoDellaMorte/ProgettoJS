@@ -7,30 +7,45 @@
 
         <meta charset="utf-8">
 
-        <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+        <script type = "text/javascript" src = "https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 
         <style>
+            body{
+                overflow:hidden;
+                background-image: url("back.jpg");
+            }
+
             table{
                 border-spacing: 10px;
-                margin:auto;
+                margin: auto;                
             }
+
+            .card{
+                box-shadow: 0 0 40px 10px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */
+            }
+            
         </style>
 
     </head>
 
 
-    <body>
+    <body id="container">
 
         <table></table>
 
         <script type = "text/javascript">
+
+            $('#container').width(window.innerWidth);
+            $('#container').height(window.innerHeight);
+
+            
 
             //creazione tabella e comparsa tabella
             tab="";
 			for (i=0; i<4;i++){ 
 				tab+="<tr>";
 				for (j=1;j<=6;j++)
-					tab+="<td>"+"<img id='"+(i*6+j)+"' src='immagini/coperto.gif'>"+"</td>";
+					tab+="<td>"+"<img id='"+(i*6+j)+"' class='card' src='immagini/coperto.gif'>"+"</td>";
 				tab+="</tr>";
 				}
 				
@@ -38,7 +53,20 @@
             //Funziona!!
             $(document).ready(function(){
                 $("table").html(tab);
+                
+                $(window).resize(function(){
 
+                    $('#container').width(window.innerWidth);
+                    $('#container').height(window.innerHeight);
+                });
+
+                $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
+                    $(e.target).css("box-shadow", "0 0 40px 10px red");
+                });
+
+                $(".card").on("mouseout", function(e) {     //fa tornare i valori di ombra a quelli precedenti
+                    $(e.target).css("box-shadow", "");
+                });
                 // Mostra gli id delle celle nella console per verificare la corrispondenza tra vettoreGrosso e la tabella
                 $("td").each(function(index){
                     console.log($(this).find("img").attr("id"));
@@ -85,6 +113,8 @@
                         let index = parseInt(event.target.id)-1;
                         $(event.target).attr("src", vettoreGrosso[index]);
                         
+                        $(event.target).removeClass("card");    //rimuove la classe per fare in modo che le immagini scoperte non si evidenzino all'hover
+                        
                         if(contaScoperti==0){
                             prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
                             contaScoperti++; 
@@ -92,7 +122,11 @@
                         else{
 
                             if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
-        
+                                
+                                //riassegna la classe a entrambe le immagini a cui era stata rimossa
+                                $(event.target).addClass('card');   
+                                $(prima).addClass('card');          
+
                                 inAttesa = true;
                                 setTimeout(function () {
                                     $(event.target).attr('src', 'immagini/coperto.gif');
