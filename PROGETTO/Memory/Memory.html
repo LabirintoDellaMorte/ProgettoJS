@@ -10,10 +10,13 @@
         <script type = "text/javascript" src = "https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 
         <style>
+
             body{
                 margin: 0;
                 overflow:hidden;
                 background-image: url("Sfondo.png");
+                background-size: cover;
+                background-attachment: fixed;   /* allo zoom della scheda lo sfondo rimane della stessa dimensone */
                 box-shadow: inset 0 0 200px 200px;
             }
 
@@ -37,6 +40,19 @@
             td{
                 text-align: center;
             }
+
+            #start{
+                
+                width: 20%;
+                height: 20%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+            }
+            
             
         </style>
 
@@ -44,6 +60,10 @@
 
 
     <body id="container">
+
+        
+        <img id="start" src="Start.png">
+        
 
         <table></table>
 
@@ -54,141 +74,161 @@
 
             
 
-            //creazione tabella e comparsa tabella
-            tab="";
-			for (i=0; i<4;i++){ 
-				tab+="<tr>";
-				for (j=1;j<=6;j++)
-					tab+="<td>"+"<img id='"+(i*6+j)+"' class='card' src='immagini/coperto.gif'>"+"</td>";
-				tab+="</tr>";
-				}
-				
-		
-            //Funziona!!
             $(document).ready(function(){
-                $("table").html(tab);
-                
-                $(window).resize(function(){
 
+                $('#start').mouseover(function(){
+                    $('#start').attr('src', 'StartHover.png');
+                    $('#start').animate({
+                        width: "23%",
+                        height: "23%",
+                    },100)
+                })
+
+                $('#start').mouseout(function(){
+                    $('#start').attr('src', 'Start.png');
+                    $('#start').animate({
+                        width: "20%",
+                        height: "20%",
+                    },100)
+                })
+
+                $(window).resize(function(){
                     $('#container').width(window.innerWidth);
                     $('#container').height(window.innerHeight);
+                });
+                //creazione tabella e comparsa tabella
+                tab="";
+			        for (i=0; i<4;i++){ 
+			        	tab+="<tr>";
+			        	for (j=1;j<=6;j++)
+			        		tab+="<td>"+"<img id='"+(i*6+j)+"' class='card' src='immagini/coperto.gif'>"+"</td>";
+			        	tab+="</tr>";
+			        	}
                     
-                });
+		
+                //Funziona!!
+                $('#start').click(function(){
 
-                $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
-                    $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
+                    $('#start').remove();
+                    $("table").html(tab);
+
                     
-                    $(e.target).animate({
-                        width: "95%",
-                        height: "95%",
-                    },100)
+
+                    $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
+                        $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
+
+                        $(e.target).animate({
+                            width: "97%",
+                            height: "97%",
+                        },100)
+                    });
+
+                    $(".card").on("mouseout", function(e) {     
+                        $(e.target).css("box-shadow", "");//fa tornare i valori di ombra a quelli precedenti
+
+                        $(e.target).animate({
+                            width: "100%",
+                            height: "100%",
+                        },100)
+                    });
+                    // Mostra gli id delle celle nella console per verificare la corrispondenza tra vettoreGrosso e la tabella
+                    $("td").each(function(index){
+                        console.log($(this).find("img").attr("id"));
+                    });
                 });
 
-                $(".card").on("mouseout", function(e) {     
-                    $(e.target).css("box-shadow", "");//fa tornare i valori di ombra a quelli precedenti
-
-                    $(e.target).animate({
-                        width: "100%",
-                        height: "100%",
-                    },100)
-                });
-                // Mostra gli id delle celle nella console per verificare la corrispondenza tra vettoreGrosso e la tabella
-                $("td").each(function(index){
-                    console.log($(this).find("img").attr("id"));
-                });
-            });
-
-            //creo vettore con tutte le immagini del memory
-            let images = [];
-            for(let i = 0; i<12; i++){
-                images[i]="immagini/mem_"+i+".gif";
-            }
-            //console.log(images);
-            //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
-            //che mi servirà per decidere le immagini nascoste dietro alla tabella
-            let vettoreGrosso = [];
-                //inizializzo tutto vettoreGrosso a 0
-                for(let i=0; i<24; i++){
-                    vettoreGrosso[i]=0; 
+                //creo vettore con tutte le immagini del memory
+                let images = [];
+                for(let i = 0; i<12; i++){
+                    images[i]="immagini/mem_"+i+".gif";
                 }
-                
-            //inserisco nel vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
-            let posizioneEstratta = 0;
-            for(let j = 0; j<((images.length)); j++){
-                for(let y = 0; y<2; y++){
-                    do{
-                        posizioneEstratta = Math.floor(Math.random()*24); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
+                //console.log(images);
+                //invece di utilizzare una matrice, uso un vettore più lungo, per ottimizzare la "corrispondenza" tra vettore e vettoreGrosso e tra vettoreGrosso e tabella, 
+                //che mi servirà per decidere le immagini nascoste dietro alla tabella
+                let vettoreGrosso = [];
+                    //inizializzo tutto vettoreGrosso a 0
+                    for(let i=0; i<24; i++){
+                        vettoreGrosso[i]=0; 
+                    }
+
+                //inserisco nel vettorreGrosso(che sarebbe il campo di gioco) le immagini (2 volte per ognuna nel vettore)
+                let posizioneEstratta = 0;
+                for(let j = 0; j<((images.length)); j++){
+                    for(let y = 0; y<2; y++){
+                        do{
+                            posizioneEstratta = Math.floor(Math.random()*24); //estraggo un numero da 0 a 23 (tot = 24), che sarà la posizione nel vettorerGrosso in cui inserirò l'immagine del vettore images
   
-                    }while(vettoreGrosso[posizioneEstratta]!=0);
-                    vettoreGrosso[posizioneEstratta]=images[j]; //se la posizione estratta non è occupata, inserisco l'immagine nel vettoreGrosso  
+                        }while(vettoreGrosso[posizioneEstratta]!=0);
+                        vettoreGrosso[posizioneEstratta]=images[j]; //se la posizione estratta non è occupata, inserisco l'immagine nel vettoreGrosso  
+                    }
                 }
-            }
 
-            //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
-            $("table").on("click", "img", scopri);
-            let prima=0, contaScoperti=0, inAttesa=false, win=false, scoperti = 0;
-            
-            function scopri(event){
-                if($(event.target).attr('src') == 'immagini/coperto.gif'){ //esegue queste operazioni solo se si clicca su un immagine coperta, per evitare errori di click su un immagine già scoperta
+                //quando l'utente schiaccia su un'immagine coperta, questa cambia e diventa la sua corrispettiva del vettoreGrosso
+                $("table").on("click", "img", scopri);
+                let prima=0, contaScoperti=0, inAttesa=false, win=false, scoperti = 0;
 
-                    console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
-                    if(!inAttesa){// evitare altri click finché le immagini sono in attesa di essere ricoperte
-                        
-                        //scopro l'immagine cliccata
-                        let index = parseInt(event.target.id)-1;
-                        $(event.target).attr("src", vettoreGrosso[index]);
-                        
-                        $(event.target).removeClass("card").off("mouseover");    //rimuove la classe e la possibilità di scatenare l'evento "mouseover" per fare in modo che le immagini scoperte non si evidenzino all'hover
-                        
-                        if(contaScoperti==0){
-                            prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
-                            contaScoperti++; 
-                        } 
-                        else{
+                function scopri(event){
+                    if($(event.target).attr('src') == 'immagini/coperto.gif'){ //esegue queste operazioni solo se si clicca su un immagine coperta, per evitare errori di click su un immagine già scoperta
 
-                            if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
+                        console.log("cliccato sull'immagine con l'ID:", event.target.id); //controllo se gli id sono corretti
+                        if(!inAttesa){// evitare altri click finché le immagini sono in attesa di essere ricoperte
 
-                                //riassegna la classe a entrambe le immagini a cui era stata rimossa
-                                $(event.target).addClass('card');   
-                                $(prima).addClass('card');     
+                            //scopro l'immagine cliccata
+                            let index = parseInt(event.target.id)-1;
+                            $(event.target).attr("src", vettoreGrosso[index]);
+
+                            $(event.target).removeClass("card").off("mouseover");    //rimuove la classe e la possibilità di scatenare l'evento "mouseover" per fare in modo che le immagini scoperte non si evidenzino all'hover
+
+                            if(contaScoperti==0){
+                                prima = event.target; //se l'immagine cliccata è la prima, salvo nella variabile evento la prima immagine cliccata
+                                contaScoperti++; 
+                            } 
+                            else{
+
+                                if ($(event.target).attr('src') != $(prima).attr('src')) { // le immagini sono diverse
+
+                                    //riassegna la classe a entrambe le immagini a cui era stata rimossa
+                                    $(event.target).addClass('card');   
+                                    $(prima).addClass('card');     
+
+                                    $(".card").on("mouseover", function(e) {    //riaggiungo l'evento dopo averlo rimosso, nel caso le carte scoperte siano diverse
+                                        $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
+
+                                        $(e.target).animate({
+                                            width: "95%",
+                                            height: "95%",
+                                        },100)
+                                    });
+
+                                    inAttesa = true;
+                                    setTimeout(function () {
+                                        $(event.target).attr('src', 'immagini/coperto.gif');
+                                        $(prima).attr('src', 'immagini/coperto.gif');   
+                                        inAttesa = false;
+                                    }, 1000);
                                 
-                                $(".card").on("mouseover", function(e) {    //riaggiungo l'evento dopo averlo rimosso, nel caso le carte scoperte siano diverse
-                                    $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
-
-                                    $(e.target).animate({
-                                        width: "95%",
-                                        height: "95%",
-                                    },100)
-                                });
-
-                                inAttesa = true;
+                                }
+                                else scoperti++;
+                                //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
                                 setTimeout(function () {
-                                    $(event.target).attr('src', 'immagini/coperto.gif');
-                                    $(prima).attr('src', 'immagini/coperto.gif');   
-                                    inAttesa = false;
-                                }, 1000);
-                    
-                            }
-                            else scoperti++;
-                            //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
-                            setTimeout(function () {
-                                contaScoperti = 0;
-                                prima = 0;
-                            }, 1001);
+                                    contaScoperti = 0;
+                                    prima = 0;
+                                }, 1001);
 
-                            checkVittoria();
+                                checkVittoria();
+                            }
                         }
                     }
                 }
-            }
 
-            function checkVittoria(){
-                if(scoperti==12)
-                setTimeout(function () {
-                    alert("HAI VINTO!!!");
-                }, 100);
-               
-            }
+                function checkVittoria(){
+                    if(scoperti==12)
+                    setTimeout(function () {
+                        alert("HAI VINTO!!!");
+                    }, 100);
+                
+                }
+            });    
         </script>
     </body>
 </html>
