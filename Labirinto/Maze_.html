@@ -307,6 +307,8 @@
                 const alertDiv = document.createElement('div');
                 alertDiv.innerHTML = message;
 
+                var dialogOpen = true;
+
                 // Aggiunge il CSS per lo stile dell'alert
                 alertDiv.style.padding = '10px';
                 alertDiv.style.height = '60px';
@@ -330,11 +332,12 @@
                 okButton.style.alignSelf = 'center';
                 // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
                 document.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
+                if (event.key === 'Enter' && dialogOpen == true) {
                     window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
                     // Chiudi l'alert
                     alertDiv.remove();
                     okButton.remove();
+                    dialogOpen = false;
                 }
                 });
                 // Aggiunge l'evento di clic per il pulsante OK
@@ -342,6 +345,7 @@
                     window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
                 alertDiv.remove(); // Rimuove l'elemento alertDiv
                 okButton.remove(); // Rimuove il pulsante okButton
+                dialogOpen = false;
                 });
                 // Aggiunge il pulsante OK all'alert personalizzato
                 alertDiv.appendChild(okButton);
@@ -419,6 +423,8 @@
                     const audio = new Audio('Vittoria.mp3');
                     // Avvia la riproduzione
                     audio.play();
+
+                    var dialog = true;
                     
                 const alertDiv = document.createElement('div');
                 alertDiv.innerHTML = message;
@@ -446,17 +452,20 @@
                 okButton.style.alignSelf = 'center';
                 // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
                 document.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
+                if (event.key === 'Enter' && dialog == true) {
+                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
                     // Chiudi l'alert
                     alertDiv.remove();
                     okButton.remove();
-                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
+                    dialog = false;
+                    
                 }
                 });
                 okButton.addEventListener('click', function() {
+                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
                     alertDiv.remove(); // Rimuove l'elemento alertDiv
                     okButton.remove(); // Rimuove il pulsante okButton
-                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
+                    dialog = false;
                 });
                 // Aggiunge il pulsante OK all'alert personalizzato
                 alertDiv.appendChild(okButton);
