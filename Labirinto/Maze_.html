@@ -331,6 +331,7 @@
                 // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
                 document.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') {
+                    window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
                     // Chiudi l'alert
                     alertDiv.remove();
                     okButton.remove();
@@ -338,7 +339,7 @@
                 });
                 // Aggiunge l'evento di clic per il pulsante OK
                 okButton.addEventListener('click', function() {
-                window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
+                    window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
                 alertDiv.remove(); // Rimuove l'elemento alertDiv
                 okButton.remove(); // Rimuove il pulsante okButton
                 });
