@@ -27,24 +27,31 @@
                 position: relative;
 			    top: 50%;                       /* sposta la tabella verso il basso del 50% della sua altezza originale rispetto alla posizione relativa*/
 			    transform: translateY(-50%);    /* sposta la tabella verso l'alto di metà della sua altezza */
+                transition: opacity 1s ease-in-out;
             }
 
             img{
                 border-radius: 8px;
+                transition: opacity 1s ease-in-out;
             }
+            
 
             .card{
-                box-shadow: 0 0 20px 3px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */                
+                box-shadow: 0 0 20px 3px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */
+                transition: width 0.1s, height 0.1s;    /* non funziona */
+            }
+            .card:hover{
+                box-shadow:0 0 20px 10px #eab676;
+                width: 97%;
+                height: 97%;
             }
 
             td{
                 text-align: center;
             }
 
-            #start{
-                
-                width: 20%;
-                height: 20%;
+            .start-win{
+
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -52,7 +59,31 @@
                 bottom: 0;
                 margin: auto;
             }
+
+            #start{
+                width: 20%;
+                height: 20%;
+                transition: opacity 0.8s ease-in-out, width 0.2s, height 0.2s;
+            }
+            #start:hover{
+
+                width: 23%;
+                height: 23%;
+            }
+
+            #win{
+                width: 40%;
+                height: 40%;
+                transition: opacity 0.8s ease-in-out;
+            }
+
+            .fade-out {
+              opacity: 0;
+            }
             
+            .fade-in {
+              opacity: 1;
+            }
             
         </style>
 
@@ -61,35 +92,25 @@
 
     <body id="container">
 
+        <img id="win" class="start-win fade-out" src="win.png">
         
-        <img id="start" src="Start.png">
-        
+        <table class="fade-out"></table>
 
-        <table></table>
+        <img id="start" class="start-win fade-in" src="Start.png">
 
         <script type = "text/javascript">
 
             $('#container').width(window.innerWidth);
             $('#container').height(window.innerHeight);
 
-            
-
             $(document).ready(function(){
 
                 $('#start').mouseover(function(){
                     $('#start').attr('src', 'StartHover.png');
-                    $('#start').animate({
-                        width: "23%",
-                        height: "23%",
-                    },100)
                 })
 
                 $('#start').mouseout(function(){
                     $('#start').attr('src', 'Start.png');
-                    $('#start').animate({
-                        width: "20%",
-                        height: "20%",
-                    },100)
                 })
 
                 $(window).resize(function(){
@@ -109,28 +130,20 @@
                 //Funziona!!
                 $('#start').click(function(){
 
-                    $('#start').remove();
-                    $("table").html(tab);
+                    $('#start').off("mouseout");    //disabilito mouseout cosi' mentre avviene l'animazione della scomparsa non fa effetti brutti collegati al mouse out
+
+                    $('#start').removeClass('fade-in');
+                    $('#start').addClass('fade-out');
+
+                    setTimeout( function(){
+                        $('#start').remove();
+                        $("table").html(tab);
+
+                        $('table').removeClass('fade-out');
+                        $('table').addClass('fade-in');
+                    },1100) 
 
                     
-
-                    $(".card").on("mouseover", function(e) {    //aggiunge un ombra rossa per mostrare la carta che si sta puntando
-                        $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
-
-                        $(e.target).animate({
-                            width: "97%",
-                            height: "97%",
-                        },100)
-                    });
-
-                    $(".card").on("mouseout", function(e) {     
-                        $(e.target).css("box-shadow", "");//fa tornare i valori di ombra a quelli precedenti
-
-                        $(e.target).animate({
-                            width: "100%",
-                            height: "100%",
-                        },100)
-                    });
                     // Mostra gli id delle celle nella console per verificare la corrispondenza tra vettoreGrosso e la tabella
                     $("td").each(function(index){
                         console.log($(this).find("img").attr("id"));
@@ -191,20 +204,13 @@
                                     $(event.target).addClass('card');   
                                     $(prima).addClass('card');     
 
-                                    $(".card").on("mouseover", function(e) {    //riaggiungo l'evento dopo averlo rimosso, nel caso le carte scoperte siano diverse
-                                        $(e.target).css("box-shadow", "0 0 20px 10px #eab676");               
-
-                                        $(e.target).animate({
-                                            width: "95%",
-                                            height: "95%",
-                                        },100)
-                                    });
-
                                     inAttesa = true;
                                     setTimeout(function () {
                                         $(event.target).attr('src', 'immagini/coperto.gif');
                                         $(prima).attr('src', 'immagini/coperto.gif');   
                                         inAttesa = false;
+
+                                            
                                     }, 1000);
                                 
                                 }
@@ -222,11 +228,27 @@
                 }
 
                 function checkVittoria(){
-                    if(scoperti==12)
-                    setTimeout(function () {
-                        alert("HAI VINTO!!!");
-                    }, 100);
-                
+                    if(scoperti==12){
+                        setTimeout(function () {
+
+                            setTimeout(function(){
+                                $('table').removeClass('fade-in');
+                                $('table').addClass('fade-out');
+                            },500);
+                                
+
+                            setTimeout(function(){
+                                $('table').remove();
+                                $('#win').removeClass('fade-out');
+                                $('#win').addClass('fade-in');
+                                $(document).click(function(){
+                                    close();
+                                });
+                            },2000);
+                        
+                        }, 100);
+                        
+                    }
                 }
             });    
         </script>
