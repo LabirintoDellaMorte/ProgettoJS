@@ -2,10 +2,13 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Arcade" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
 
         <style>
             body {
-                background-color:  white;
+                background-color:  black;
             }
             canvas {
                 margin: auto;
@@ -18,11 +21,24 @@
                 margin: auto;
             }
 
+            @font-face {
+            font-family: 'Arcade';
+            src: url('ARCADE.ttf');
+            }
+
+            @font-face {
+            font-family: 'Arcade1';
+            src: url('Arcade1.ttf');
+            }
+
             .my-custom-font {
-            font-family: 'Helvetica Neue', sans-serif;
+            font-family: 'Arcade1','Arcade', sans-serif;
             font-size: 16px;
             font-weight: 400;
+            background-color: antiquewhite;
             }
+
+            
 
         </style>
     </head>
@@ -91,55 +107,8 @@
                 c.drawImage(image, x, y, width, height);
             }
         }
-
-        // Set initial position of the character
-        var player = {
-        x: 0,
-        y: 0
-        };
-
-        var playerY_now,
-            playerX_now;
-
-        var wall=[], enemy=[], win=[], player_;
         
-        function drawMaze() {
-            
-            var innerWidth = 1400,
-            innerHeight = 727;
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-
-            /*const container = document.getElementById('canvas-container');
-            container.appendChild(canvas);
-            const canvasStyle = window.getComputedStyle(canvas);
-            const containerStyle = window.getComputedStyle(container);
-            const canvasWidth = parseInt(canvasStyle.width);
-            const canvasHeight = parseInt(canvasStyle.height);
-            const containerWidth = parseInt(containerStyle.width);
-            const containerHeight = parseInt(containerStyle.height);
-
-            canvas.style.position = 'absolute';
-            canvas.style.left = (containerWidth - canvasWidth) / 2 + 'px';
-            canvas.style.top = (containerHeight - canvasHeight) / 2 + 'px';*/
-
-        /*var maze = [
-            [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-            [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 0, -1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-            [ 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ -1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0],
-            [ 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-            [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0],
-            [ 1, -1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
-            [ 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, -2],
-            [ 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0],
-        ];*/
-
-        let maze = [
+        let maze1 = [
         [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
@@ -160,23 +129,52 @@
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
 
-
-        /*let maze = [
-  [0, 1, 0, 1, 0, 0, 0, 1, 1, 1],
-  [0, 0, 0, 1, 1, 1, 0, 0, 0, 1],
-  [1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-  [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-  [1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
-  [1, 1, 1, 0, 1, 1, 0, 0, 0, 1],
-  [1, 0, 0, 0, 1, 0, 1, 1, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
-  [-2, 0, 1, 1, 1, 0, 1, 0, 1, 1]
-];*/
-
-
+        let maze2 = [
+        [0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1],
+        [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+        [0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0],
+        [1, 1, 1, 1, 1, 1, 0, 1, 0, 0, -1, 1, 1, -2, 1, 1, -1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1],
+        [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],
+        [0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0],
+        [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+        [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1],
+        [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+        ];
         
-        //We loop the maze array and rapresent the 1s as walls
+        //Scelta casuale fra le due matrici
+        var randomIndex = Math.floor(Math.random() * 2); // Genera 0 o 1
+        var maze = (randomIndex === 0) ? maze1 : maze2;
+
+        // Set initial position of the character
+        var player = {
+        x: 0,
+        y: 0
+        };
+
+        //Variabili che utilizzerò nel programma per salvarmi la posizione del player precedente ad un movimento
+        var playerY_now,
+            playerX_now;
+
+        //Array che salveranno ogni muro, nemico ecc..., mi serve salvarli per controllare le eventuali collisioni con il player
+        var wall=[], enemy=[], win=[], player_;
+        
+        function drawMaze() {
+            
+            var innerWidth = 1400,
+            innerHeight = 727;
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        
+        //Scorriamo la matrice e in base agli 1, -1, 0 e -2 disegniamo 
         for (var y = 0; y<maze.length; y++) {
             for (var x=0; x<maze[y].length; x++) {
 
@@ -231,11 +229,10 @@
         }
 
         //Chiamata alla funzione di aggiornamento
-        //requestAnimationFrame(update);
         update();
     }
 
-        // Handle arrow key presses
+        // Controlliamo sempre che l'utente si sposti
         document.addEventListener("keydown", function(event) {
 
         playerY_now = player.y;
@@ -261,61 +258,218 @@
         if (player.x>1150) player.x = playerX_now;
         if (player.y>650) player.y = playerY_now;
 
-        // Redraw the maze and player
-        drawMaze();
-        if (checkCollision(player_, wall, "Hai scontrato un muro, attento!") == true) {
+        //Nel caso non ci siano collisioni ridisegno solo il player
+        drawPlayer();
+        player_.update();
+
+        //In caso di collisioni ridisegno sia il player che il labirinto
+        if (checkCollisionWall(player_, wall, "Hai scontrato un muro, attento!") == true) {
             player.x = playerX_now;
             player.y = playerY_now;
             drawMaze();
         };
-        if (checkCollision(player_, enemy, "Hai scontrato un nemico, ora gioca bastardo!") == true) {
+        if (checkCollisionEnemy(player_, enemy, "Hai scontrato un nemico, ora gioca bastardo!") == true) {
             player.x = playerX_now;
             player.y = playerY_now;
             drawMaze();
-            location.replace("https://www.google.com");
         };
-        if (checkCollision(player_, win, "VITTORIAA! IL MIGLIORE!") == true) {
+        
+        if (checkCollisionWin(player_, win, "VITTORIAA! IL MIGLIORE!") == true) {
             player.x = playerX_now;
             player.y = playerY_now;
             drawMaze();
+            player_.update();
         };
         });
 
-        // Draw the player at its current position
+        // Cancella dove era precedentemente disegnato il player e lo disegna nella nuova posizione
         function drawPlayer() {
-            c.clearRect(player.x, player.y, blockSize, blockSize);
+            c.clearRect(playerX_now, playerY_now, blockSize, blockSize);
             player_ = new object(image_player,player.x, player.y, blockSize, blockSize);
         }
 
+        //Funzione che returna true in caso di scontro tra due object
         function collides(a, b) {
-
         return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height &&
         a.y + a.height > b.y;
         }
 
-        function checkCollision (player_, wall, message) {
-
+        //Le seguenti funzioni servono per controllare se ci sono collisioni tra il player e gli altri elementi del canvas, e in tal caso si gestisce la situazione di conseguenza
+        function checkCollisionEnemy(player_, wall, message) {
             for (var i=0; i<wall.length; i++) {
                 if (collides(player_, wall[i])) {
-                    swal({
-                    text: message,
-                    icon: "warning",
-                    customClass: {
-                    text: 'my-custom-font',
-                    },
-                    })
 
-                    return true;
+                    // Crea l'elemento audio
+                    const audio = new Audio('Enemy.mp3');
+                    // Avvia la riproduzione
+                    audio.play();
+                    
+                const alertDiv = document.createElement('div');
+                alertDiv.innerHTML = message;
+
+                // Aggiunge il CSS per lo stile dell'alert
+                alertDiv.style.padding = '10px';
+                alertDiv.style.height = '60px';
+                alertDiv.style.width = '500px';
+                alertDiv.style.border = '1px solid #ccc';
+                alertDiv.style.borderRadius = '5px';
+                alertDiv.style.backgroundColor = 'antiquewhite';
+                alertDiv.style.fontFamily = 'Arcade1';
+                alertDiv.style.position = 'fixed';
+                alertDiv.style.bottom = '620px';
+                alertDiv.style.right = '450px';
+                alertDiv.style.zIndex = '9999';
+                alertDiv.style.animation = 'slideIn 1s ease-in-out forwards';
+                alertDiv.style.display = 'flex'; // Abilita il layout Flexbox
+                alertDiv.style.flexDirection = 'column'; // Imposta la direzione del layout Flexbox
+                // Crea un pulsante OK per l'alert
+                const okButton = document.createElement('button');
+                okButton.style.fontFamily = 'Arcade';
+                okButton.innerText = 'OK';
+                okButton.style.marginTop = '10px';
+                okButton.style.alignSelf = 'center';
+                // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
+                document.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    // Chiudi l'alert
+                    alertDiv.remove();
+                    okButton.remove();
+                }
+                });
+                // Aggiunge l'evento di clic per il pulsante OK
+                okButton.addEventListener('click', function() {
+                window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
+                alertDiv.remove(); // Rimuove l'elemento alertDiv
+                okButton.remove(); // Rimuove il pulsante okButton
+                });
+                // Aggiunge il pulsante OK all'alert personalizzato
+                alertDiv.appendChild(okButton);
+                // Aggiunge l'alert personalizzato al body del documento
+                document.body.appendChild(alertDiv);
+
+                return true;
                 }
             }
+            return false;
         }
 
-        // Call the function to draw the maze and player
-        // drawMaze();
-       // drawPlayer();
+        function checkCollisionWall(player_, wall, message) {
+            for (var i=0; i<wall.length; i++) {
+                if (collides(player_, wall[i])) {
 
+                    // Crea l'elemento audio
+                    const audio = new Audio('Dang.mp3');
+                    // Avvia la riproduzione
+                    audio.play();
+                    
+                const alertDiv = document.createElement('div');
+                alertDiv.innerHTML = message;
+
+                // Aggiunge il CSS per lo stile dell'alert
+                alertDiv.style.padding = '10px';
+                alertDiv.style.height = '60px';
+                alertDiv.style.width = '500px';
+                alertDiv.style.border = '1px solid #ccc';
+                alertDiv.style.borderRadius = '5px';
+                alertDiv.style.backgroundColor = 'antiquewhite';
+                alertDiv.style.fontFamily = 'Arcade1';
+                alertDiv.style.position = 'fixed';
+                alertDiv.style.bottom = '620px';
+                alertDiv.style.right = '450px';
+                alertDiv.style.zIndex = '9999';
+                alertDiv.style.animation = 'slideIn 1s ease-in-out forwards';
+                alertDiv.style.display = 'flex'; // Abilita il layout Flexbox
+                alertDiv.style.flexDirection = 'column'; // Imposta la direzione del layout Flexbox
+                // Crea un pulsante OK per l'alert
+                const okButton = document.createElement('button');
+                okButton.style.fontFamily = 'Arcade';
+                okButton.innerText = 'OK';
+                okButton.style.marginTop = '10px';
+                okButton.style.alignSelf = 'center';
+                // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
+                document.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    // Chiudi l'alert
+                    alertDiv.remove();
+                    okButton.remove();
+                }
+                });
+
+                okButton.addEventListener('click', function() {
+                    alertDiv.remove(); // Rimuove l'elemento alertDiv
+                    okButton.remove(); // Rimuove il pulsante okButton
+                });
+                // Aggiunge il pulsante OK all'alert personalizzato
+                alertDiv.appendChild(okButton);
+                // Aggiunge l'alert personalizzato al body del documento
+                document.body.appendChild(alertDiv);
+
+                return true;
+                }
+            }
+            return false;
+        }
+
+        function checkCollisionWin(player_, wall, message) {
+            for (var i=0; i<wall.length; i++) {
+                if (collides(player_, wall[i])) {
+
+                    // Crea l'elemento audio
+                    const audio = new Audio('Vittoria.mp3');
+                    // Avvia la riproduzione
+                    audio.play();
+                    
+                const alertDiv = document.createElement('div');
+                alertDiv.innerHTML = message;
+
+                // Aggiunge il CSS per lo stile dell'alert
+                alertDiv.style.padding = '10px';
+                alertDiv.style.height = '60px';
+                alertDiv.style.width = '500px';
+                alertDiv.style.border = '1px solid #ccc';
+                alertDiv.style.borderRadius = '5px';
+                alertDiv.style.backgroundColor = '#90EE90';
+                alertDiv.style.fontFamily = 'Arcade1';
+                alertDiv.style.position = 'fixed';
+                alertDiv.style.bottom = '620px';
+                alertDiv.style.right = '450px';
+                alertDiv.style.zIndex = '9999';
+                alertDiv.style.animation = 'slideIn 1s ease-in-out forwards';
+                alertDiv.style.display = 'flex'; // Abilita il layout Flexbox
+                alertDiv.style.flexDirection = 'column'; // Imposta la direzione del layout Flexbox
+                // Crea un pulsante OK per l'alert
+                const okButton = document.createElement('button');
+                okButton.style.fontFamily = 'Arcade';
+                okButton.innerText = 'OK';
+                okButton.style.marginTop = '10px';
+                okButton.style.alignSelf = 'center';
+                // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
+                document.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    // Chiudi l'alert
+                    alertDiv.remove();
+                    okButton.remove();
+                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
+                }
+                });
+                okButton.addEventListener('click', function() {
+                    alertDiv.remove(); // Rimuove l'elemento alertDiv
+                    okButton.remove(); // Rimuove il pulsante okButton
+                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
+                });
+                // Aggiunge il pulsante OK all'alert personalizzato
+                alertDiv.appendChild(okButton);
+                // Aggiunge l'alert personalizzato al body del documento
+                document.body.appendChild(alertDiv);
+
+                return true;
+                }
+            }
+            return false;
+        }
 
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     </body>
 </html>
