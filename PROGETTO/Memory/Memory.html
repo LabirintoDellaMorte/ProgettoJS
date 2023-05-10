@@ -100,13 +100,17 @@
 
         <script type = "text/javascript">
 
+            //variabili per audio
+            let oMaGad = new Audio('sounds/WhatTheHeell.mp3');
+            let SoloHarp = new Audio('sounds/CelticHarpSolo.mp3');
+            
             $('#container').width(window.innerWidth);
             $('#container').height(window.innerHeight);
 
             $(document).ready(function(){
-
                 $('#start').mouseover(function(){
                     $('#start').attr('src', 'StartHover.png');
+                    SoloHarp.play();
                 })
 
                 $('#start').mouseout(function(){
@@ -214,8 +218,11 @@
                                     }, 1000);
                                 
                                 }
-                                else scoperti++;
-                                //se le due immagini sono uguali, restano scoperte e riazzero le due variabili utilizzate
+                                else {
+                                    scoperti++;
+                                    oMaGad.play();
+                                }
+                                //riazzero le due variabili utilizzate
                                 setTimeout(function () {
                                     contaScoperti = 0;
                                     prima = 0;
