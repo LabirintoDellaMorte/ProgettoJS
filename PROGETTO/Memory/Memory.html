@@ -108,9 +108,11 @@
             $('#container').height(window.innerHeight);
 
             $(document).ready(function(){
+                SoloHarp.autoplay = true;
+                SoloHarp.load();
+                SoloHarp.loop = true;
                 $('#start').mouseover(function(){
                     $('#start').attr('src', 'StartHover.png');
-                    SoloHarp.play();
                 })
 
                 $('#start').mouseout(function(){
@@ -128,12 +130,11 @@
 			        	for (j=1;j<=6;j++)
 			        		tab+="<td>"+"<img id='"+(i*6+j)+"' class='card' src='immagini/coperto.gif'>"+"</td>";
 			        	tab+="</tr>";
-			        	}
-                    
+			        }
 		
                 //Funziona!!
                 $('#start').click(function(){
-
+                    
                     $('#start').off("mouseout");    //disabilito mouseout cosi' mentre avviene l'animazione della scomparsa non fa effetti brutti collegati al mouse out
 
                     $('#start').removeClass('fade-in');
@@ -213,12 +214,11 @@
                                         $(event.target).attr('src', 'immagini/coperto.gif');
                                         $(prima).attr('src', 'immagini/coperto.gif');   
                                         inAttesa = false;
-
-                                            
                                     }, 1000);
                                 
                                 }
                                 else {
+                                    oMaGad.pause();
                                     scoperti++;
                                     oMaGad.play();
                                 }
