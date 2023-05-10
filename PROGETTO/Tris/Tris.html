@@ -184,8 +184,9 @@
 			if (win) {//alert per vittoria
 				if(winner == 'X')alert("Hai vinto!");
 				else alert("Ha vinto Mario!");
+
+				titolo.innerHTML="Partita finita!"
 			}
-			
 		}
 
 		function checkPareggio(){ 
@@ -196,6 +197,7 @@
 				}
 				if(pareggio){
 					alert("Pareggio!");
+					titolo.innerHTML="Pareggio!"
 				}
 			}
 		}
@@ -203,9 +205,7 @@
 		document.getElementById("reset").onclick = resetTotale; //reset
 		
 		function resetTotale() {
-			for (let i=0; i<9; i++) {
-				caselle[i].innerHTML = "";
-			}
+			location.reload();
 		}
     </script>
 </body>
