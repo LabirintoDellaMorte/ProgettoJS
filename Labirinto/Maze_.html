@@ -84,6 +84,7 @@
         image_win.src = "Win.png";*/
 
         const image_wall = loadImage("WallTile.png");
+        const image_floor = loadImage("FloorTile.png");
         const image_player = loadImage("Player.png");
         const image_enemy = loadImage("Enemy.png");
         const image_win = loadImage("Win.png");
@@ -165,7 +166,7 @@
             playerX_now;
 
         //Array che salveranno ogni muro, nemico ecc..., mi serve salvarli per controllare le eventuali collisioni con il player
-        var wall=[], enemy=[], win=[], player_;
+        var wall=[], floor=[], enemy=[], win=[], player_;
         
         function drawMaze() {
             
@@ -180,8 +181,12 @@
 
                 if (maze[y][x] === 1) {
 
-                    //Paint it red of 1s
                     wall.push(new object(image_wall, x*blockSize, y*blockSize, blockSize, blockSize));
+                }
+                else if (maze[y][x] === 0) {
+
+                    floor.push(new object(image_floor, x*blockSize, y*blockSize, blockSize, blockSize));
+
                 }
                 else if (maze[y][x] === -1) {
 
