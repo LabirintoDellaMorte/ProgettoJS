@@ -222,9 +222,14 @@
                                     //metto in pausa l'audio precedente se è ancora in riproduzione
                                     oMaGad.pause();
                                     oMaGad.currentTime = 0;
+                                    SoloHarp.pause();
 
                                     scoperti++; //aumento il contatore degli scoperti
                                     oMaGad.play(); //faccio partire l'audio
+
+                                    setTimeout(function () {
+                                        SoloHarp.play();
+                                    }, 7500);
                                 }
                                 //riazzero le due variabili utilizzate
                                 setTimeout(function () {
@@ -245,7 +250,8 @@
                             //fermiamo gli audio precedenti
                             oMaGad.pause();
                             oMaGad.currentTime = 0;
-
+                            SoloHarp.pause();
+                            SoloHarp.currentTime = 0;
                             
                             setTimeout(function(){
                                 $('table').removeClass('fade-in');
@@ -254,8 +260,6 @@
                                 
 
                             setTimeout(function(){
-                                SoloHarp.pause();
-                                SoloHarp.currentTime = 0;
                                 $('table').remove();
                                 $('#win').removeClass('fade-out');
                                 Victory.play();
