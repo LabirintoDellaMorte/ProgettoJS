@@ -15,20 +15,20 @@
 		margin: 0;
 	}
 
-	h1{
-		margin: 0;
-		font-weight: normal;
-		font-size: 55pt;
+	#result{
+		
 		position: relative;
-		top: -120px;
+		top:450px;
+		font-size: 60pt;
 	}
+
 	td{
 		
 		border: collapse;
-		border-radius: 50px;
+		border-radius: 48px;	/* il border radius non e' lo stesso della tabella perche' negli angoli da un effetto brutto */
 		text-align:center;
-		height: 230px;
-		width: 230px;
+		height: 130px;
+		width: 130px;
 		font-size: 60pt;
 		background-color: #F9FBFF;
 	}
@@ -42,25 +42,31 @@
 		margin: 0 auto;
 		background-color: black;
 		position: fixed;
-		bottom: 7%;
 		right: 0;
 		left: 0;
+		-webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.3));
 		              
 	}
-
-	table, #tit, #titolo, #reset, #close{
+	#titolo{
+		transition: top 1s ease-out;
+		margin: 0;
+		font-weight: normal;
+		font-size: 55pt;
+		position: relative;
+	}
+	table, #tit{
 		transition: opacity 1s ease-in-out; 
 	}
-
+	
 	#reset, #close{
 		position: fixed;
 		bottom: 0;
 	}
 	#reset{
-		left: 0;
+		transition: left 0.8s ease-out;
 	}
 	#close{
-		right: 0;
+		transition: right 0.8s ease-out;
 	}
 	#tit{
 		position: relative;
@@ -80,6 +86,27 @@
 	.fade-in{
 		opacity: 1;
 	}
+
+	.is-up{
+		top: -500px;
+	}
+	.came-down{
+		top: -120px;
+	}
+
+	.is-left{
+		left: -500px;
+	}
+	.came-right{
+		left: 0px;
+	}
+
+	.is-right{
+		right: -500px;
+	}
+	.came-left{
+		right: 0px;
+	}
 	
 </style>
 
@@ -88,35 +115,35 @@
 </head>
 
 <body>
+	<div id="container">
+		<img id="tit" class="fade-out" src="imgs/H1.png">
+		<h1 id="titolo" class="is-up">YOUR TURN</h1>
+		<table class="fade-out">
 
-	<img id="tit" class="fade-out" src="imgs/H1.png">
-	<h1 id="titolo" class="fade-out">YOUR TURN</h1>
-	<table class="fade-out">
-		
-		
-		<tr>
-			<td class="clickable on"></td>
-			<td class="clickable on"></td>
-			<td class="clickable on"></td>
-		</tr>
-		 
-		<tr>
-			<td class="clickable on"></td>
-			<td class="clickable on"></td>
-			<td class="clickable on"></td>
-		</tr>
-		
-		<tr>
-			<td class="clickable on"></td>
-			<td class="clickable on"></td>
-			<td class="clickable on"></td>
-		</tr>
-	</table>
-	
-	<img id="reset"  class="fade-out" src="imgs/Reset.png">
-	<img id="close"  class="fade-out" src="imgs/Close.png">
 
-	
+			<tr>
+				<td class="clickable on"></td>
+				<td class="clickable on"></td>
+				<td class="clickable on"></td>
+			</tr>
+
+			<tr>
+				<td class="clickable on"></td>
+				<td class="clickable on"></td>
+				<td class="clickable on"></td>
+			</tr>
+
+			<tr>
+				<td class="clickable on"></td>
+				<td class="clickable on"></td>
+				<td class="clickable on"></td>
+			</tr>
+		</table>
+
+		<img id="reset"  class="is-left" src="imgs/Reset.png">
+		<img id="close"  class="is-right" src="imgs/Close.png">
+	</div>
+	<h1 id="result"></h1>
    
    
     <script>
@@ -137,15 +164,15 @@
 			$('#tit').removeClass('fade-out');
 			$('#tit').addClass('fade-in');
 			setTimeout(function(){
-				$('#titolo').removeClass('fade-out');
-				$('#titolo').addClass('fade-in');
+				$('#titolo').removeClass('is-up');
+				$('#titolo').addClass('came-down');
 				setTimeout(function(){
-					$('#reset').removeClass('fade-out');
-					$('#reset').addClass('fade-in');
+					$('#reset').removeClass('is-left');
+					$('#reset').addClass('came-right');
 
 					setTimeout(function(){
-						$('#close').removeClass('fade-out');
-						$('#close').addClass('fade-in');
+						$('#close').removeClass('is-right');
+						$('#close').addClass('came-left');
 					},500)
 				},1000)
 			},200);
@@ -191,7 +218,7 @@
 
 					caselle[sceltaMario].innerHTML="O";
 					$(caselle[sceltaMario]).removeClass('clickable');
-					titolo.innerHTML="YOUR TURN"
+					titolo.innerHTML="YOUR TURN";
 
 					checkVittoria();
 					checkPareggio();
@@ -245,8 +272,12 @@
 				titolo.innerHTML="GAME ENDED";
 
 				setTimeout(function(){
-					if(winner == 'X')alert("Hai vinto!");
-					else alert("Ha vinto Mario!");
+					$('#container').hide(1000, function(){ 
+							$('#container').remove(); 
+					});
+					if(winner == 'X')	$('#result').html('YOU WON');
+				
+					else $('#result').html('YOU LOST');
 				},1000);
 				
 			}
@@ -259,8 +290,10 @@
 					if(caselle[i].innerHTML == "")pareggio=false;
 				}
 				if(pareggio){
-					alert("Pareggio!");
-					titolo.innerHTML="Pareggio!"
+					titolo.innerHTML="GAME ENDED";
+					setTimeout(function(){
+						$('#result').html('TIE');
+					},1000);
 				}
 			}
 		}
