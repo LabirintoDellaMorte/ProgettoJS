@@ -1,6 +1,12 @@
 $(document).ready(function(){
 
-    let bar = new Audio('metalPipe.mp3');
+    let bar = new Audio('sounds/metalPipe.mp3');
+    /*let sottofondo = new Audio('sounds/TheEncounter.mp3');
+
+    //parte musica di sottofondo
+    sottofondo.autoplay = true;
+    sottofondo.load();
+    sottofondo.loop = true;*/
 
     // seleziona il tag body
     const body = document.getElementById("pagina");
@@ -74,7 +80,13 @@ $(document).ready(function(){
     }
 
     function randomColor(){
+        //sottofondo.stop();
         bar.play();
+
+       /* setTimeout(function () {
+            sottofondo.play();
+        }, 3500);*/
+
         $("#stop").css("backgroundColor", colors[Math.floor((Math.random()*13))]);
         startTime=new Date();
         
