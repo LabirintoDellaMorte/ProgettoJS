@@ -103,6 +103,7 @@
             //variabili per audio
             let oMaGad = new Audio('sounds/WhatTheHeell.mp3');
             let SoloHarp = new Audio('sounds/CelticHarpSolo.mp3');
+            let Victory = new Audio('sounds/xenogenesis.mp3');
             
             $('#container').width(window.innerWidth);
             $('#container').height(window.innerHeight);
@@ -218,9 +219,12 @@
                                 
                                 }
                                 else {
+                                    //metto in pausa l'audio precedente se è ancora in riproduzione
                                     oMaGad.pause();
-                                    scoperti++;
-                                    oMaGad.play();
+                                    oMaGad.currentTime = 0;
+
+                                    scoperti++; //aumento il contatore degli scoperti
+                                    oMaGad.play(); //faccio partire l'audio
                                 }
                                 //riazzero le due variabili utilizzate
                                 setTimeout(function () {
@@ -238,6 +242,13 @@
                     if(scoperti==12){
                         setTimeout(function () {
 
+                            //fermiamo gli audio precedenti
+                            SoloHarp.pause();
+                            SoloHarp.currentTime = 0;
+                            oMaGad.pause();
+                            oMaGad.currentTime = 0;
+
+                            Victory.play();
                             setTimeout(function(){
                                 $('table').removeClass('fade-in');
                                 $('table').addClass('fade-out');
