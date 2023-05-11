@@ -243,12 +243,10 @@
                         setTimeout(function () {
 
                             //fermiamo gli audio precedenti
-                            SoloHarp.pause();
-                            SoloHarp.currentTime = 0;
                             oMaGad.pause();
                             oMaGad.currentTime = 0;
 
-                            Victory.play();
+                            
                             setTimeout(function(){
                                 $('table').removeClass('fade-in');
                                 $('table').addClass('fade-out');
@@ -256,8 +254,11 @@
                                 
 
                             setTimeout(function(){
+                                SoloHarp.pause();
+                                SoloHarp.currentTime = 0;
                                 $('table').remove();
                                 $('#win').removeClass('fade-out');
+                                Victory.play();
                                 $('#win').addClass('fade-in');
                                 $(document).click(function(){
                                     close();
