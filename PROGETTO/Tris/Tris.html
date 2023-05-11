@@ -6,23 +6,31 @@
 <meta charset="UTF-8">
 
 <style>
-	td{
-		border:3px solid black;
-		border: collapse;
-		text-align:center;
-		height: 70px;
-		width: 70px;
-		font-size: 40px;
-		background-color: grey;
+	body{
+		background-color: #F9FBFF;
+		font-family: 'Courier New', Courier, monospace;
+		text-align: center;
+		overflow: hidden;
+		padding: 0;
+		margin: 0;
 	}
-	
-	th{
-		border:3px solid black;
+
+	h1{
+		margin: 0;
+		font-weight: normal;
+		font-size: 55pt;
+		position: relative;
+		top: -120px;
+	}
+	td{
+		
+		border: collapse;
+		border-radius: 50px;
 		text-align:center;
-		height: 70px;
-		width: 70px;
-		font-size: 70px;
-		background-color: grey;
+		height: 230px;
+		width: 230px;
+		font-size: 60pt;
+		background-color: #F9FBFF;
 	}
 	
 	tr{
@@ -30,90 +38,140 @@
 	}
 	
 	table{
-		width: 400px;
-		height: 550px;
-		margin: auto;
+		border-radius: 50px;
+		margin: 0 auto;
+		background-color: black;
+		position: fixed;
+		bottom: 7%;
+		right: 0;
+		left: 0;
+		              
 	}
+
+	table, #tit, #titolo, #reset, #close{
+		transition: opacity 1s ease-in-out; 
+	}
+
+	#reset, #close{
+		position: fixed;
+		bottom: 0;
+	}
+	#reset{
+		left: 0;
+	}
+	#close{
+		right: 0;
+	}
+	#tit{
+		position: relative;
+	}
+
+	.clickable{
+		transition: background-color 0.3s ease-in-out;
+	}
+
+	.clickable:hover{
+		background-color: red;
+	}
+
+	.fade-out{
+		opacity: 0;
+	}
+	.fade-in{
+		opacity: 1;
+	}
+	
 </style>
+
+<script type = "text/javascript" src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
 <body>
-		<p>Sfida <u>Mario</u> a tris! Il riquadro in alto indica di chi è il turno: Mario è un gentiluomo e fare cominciare te per primo. Mario ha il simbolo <b>O</b>, mentre tu <b>X</b>.</p>
 
-		<table>
-			<tr>
-				<th colspan="3" id="titolo">Tocca a te!</th>
-			</tr>
-			
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			 
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
+	<img id="tit" class="fade-out" src="imgs/H1.png">
+	<h1 id="titolo" class="fade-out">YOUR TURN</h1>
+	<table class="fade-out">
 		
-		<button id="reset">Reset</button>
+		
+		<tr>
+			<td class="clickable on"></td>
+			<td class="clickable on"></td>
+			<td class="clickable on"></td>
+		</tr>
+		 
+		<tr>
+			<td class="clickable on"></td>
+			<td class="clickable on"></td>
+			<td class="clickable on"></td>
+		</tr>
+		
+		<tr>
+			<td class="clickable on"></td>
+			<td class="clickable on"></td>
+			<td class="clickable on"></td>
+		</tr>
+	</table>
+	
+	<img id="reset"  class="fade-out" src="imgs/Reset.png">
+	<img id="close"  class="fade-out" src="imgs/Close.png">
 
+	
    
    
     <script>
+	
+	$(document).ready(function(){
+		
+
 	
 		//variabili
 		let caselle = document.getElementsByTagName("td");
 		let titolo = document.getElementById("titolo");
 		let win = false; //variabile utilizzata per controllare se qualcuno ha gia vinto o no (usata anche nel pareggio)
 		
+		$('table').removeClass('fade-out');
+		$('table').addClass('fade-in');
+
+		setTimeout(function(){
+			$('#tit').removeClass('fade-out');
+			$('#tit').addClass('fade-in');
+			setTimeout(function(){
+				$('#titolo').removeClass('fade-out');
+				$('#titolo').addClass('fade-in');
+				setTimeout(function(){
+					$('#reset').removeClass('fade-out');
+					$('#reset').addClass('fade-in');
+
+					setTimeout(function(){
+						$('#close').removeClass('fade-out');
+						$('#close').addClass('fade-in');
+					},500)
+				},1000)
+			},200);
+		},500)
 		
 		//onMouseOver per tutti i td
 		for(var i=0; i<(caselle.length); i++)
 		{
-			caselle[i].onmouseover=rosso;
-			caselle[i].onmouseout=torna;
 			caselle[i].onclick=cambioTurno;
 		}
-		
-		function rosso(e)
-		{
-			e.target.style.backgroundColor="red";
-		}
-		
-		function torna(e)
-		{
-			e.target.style.backgroundColor="grey";
-		}
-		
-		
+
 		//cambio del titolo e inserimento del segno nel posto scelto
 		function cambioTurno(e)
 		{ 
 			if(!win){
 				if(e.target.innerHTML=="")
 				{
-					if(titolo.innerHTML=="Tocca a te!") 
+					if(titolo.innerHTML=="YOUR TURN") 
 					{
-						titolo.innerHTML="Tocca a Mario!";
-						e.target.innerHTML="X"
+						titolo.innerHTML="NOT YOUR TURN";
+						e.target.innerHTML="X";
+						$(e.target).removeClass('clickable');
 						setTimeout(turnoMario, 1000);
 					}
-					else 
-					{
-						alert("Non barare! E' il turno di Mario")
-					}
+
 				}
-				else alert("CELLA GIA' SCELTA!");
 
 				//setTimeout(function (){ tolto senno ripeteva due volte (entrando anche dopo la vittoria dell'utente in turnoMario e viceversa)
 					checkVittoria();
@@ -125,14 +183,15 @@
 		function turnoMario(){ //turno di Mario
 			if(!win){
 				let sceltaMario = 0;
-				if(titolo.innerHTML=="Tocca a Mario!"){
+				if(titolo.innerHTML=="NOT YOUR TURN"){
 					do{
 						sceltaMario = Math.floor(Math.random()*9);
 						console.log(sceltaMario);
 					}while(caselle[sceltaMario].innerHTML!=""); 
 
 					caselle[sceltaMario].innerHTML="O";
-					titolo.innerHTML="Tocca a te!"
+					$(caselle[sceltaMario]).removeClass('clickable');
+					titolo.innerHTML="YOUR TURN"
 
 					checkVittoria();
 					checkPareggio();
@@ -182,10 +241,14 @@
 
 
 			if (win) {//alert per vittoria
-				if(winner == 'X')alert("Hai vinto!");
-				else alert("Ha vinto Mario!");
 
-				titolo.innerHTML="Partita finita!"
+				titolo.innerHTML="GAME ENDED";
+
+				setTimeout(function(){
+					if(winner == 'X')alert("Hai vinto!");
+					else alert("Ha vinto Mario!");
+				},1000);
+				
 			}
 		}
 
@@ -201,12 +264,24 @@
 				}
 			}
 		}
+		
 
-		document.getElementById("reset").onclick = resetTotale; //reset
+			$('#reset').click(function(){
+				resetTotale();
+			});
+
+			$('#close').click(function(){
+				let myWindow = window.open("", "_self");
+   				myWindow.close();
+			});
+		
+			
 		
 		function resetTotale() {
 			location.reload();
 		}
+
+	});
     </script>
 </body>
 </html>
