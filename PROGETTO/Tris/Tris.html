@@ -144,7 +144,7 @@
 		<img id="close"  class="is-right" src="imgs/Close.png">
 	</div>
 	<h1 id="result"></h1>
-   
+	<img id="imgFine" src="">
    
     <script>
 	
@@ -275,9 +275,15 @@
 					$('#container').hide(1000, function(){ 
 							$('#container').remove(); 
 					});
-					if(winner == 'X')	$('#result').html('YOU WON');
+					if(winner == 'X'){
+						$('#result').html('YOU WON');
+						$("#imgFine").attr('src', 'imgs/win.jpg');
+					}	
 				
-					else $('#result').html('YOU LOST');
+					else {
+						$('#result').html('YOU LOST');
+						$("#imgFine").attr('src', 'imgs/troll.PNG');
+					}
 				},1000);
 				
 			}
