@@ -1,0 +1,46 @@
+body{
+    text-align: center;
+    overflow: hidden;
+    font-family: 'RussianRoulette';
+}
+@font-face {
+    font-family: RussianRoulette;
+    src: url('KrinkesDecorPERSONAL.ttf');
+}
+
+h1{
+    
+    font-size: 80pt;
+    margin: 0;
+    font-weight: normal;
+}
+
+#top{
+    position: relative;
+    top: 0%;
+    transition: top 1s ease-in;
+}
+#number-of-bullets{
+    margin-top: 300px;
+    transition: opacity 1s ease-in;
+}
+
+#loading{
+    width: 40%;
+    transition: transform 0.7s ease-in, opacity 0.8s ease-in;
+}
+
+#container1{
+    transition: opacity 1.2s ease-in;
+}
+
+.went-up{
+    position: relative;
+    top: -500px;
+}
+.spin{
+    transform: rotate(-360deg);
+}
+.fade-out{
+    opacity: 0;
+}
