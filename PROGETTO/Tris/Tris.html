@@ -296,6 +296,9 @@
 					if(caselle[i].innerHTML == "")pareggio=false;
 				}
 				if(pareggio){
+					$('#container').hide(1000, function(){ 
+							$('#container').remove(); 
+					});
 					titolo.innerHTML="GAME ENDED";
 					setTimeout(function(){
 						$('#result').html('TIE');
