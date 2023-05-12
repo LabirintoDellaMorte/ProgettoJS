@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pazza roulette russa sovietica</title>
+
+		<link rel="stylesheet" href="style.css">
+
+    	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    	<script src="script.js"></script>
+	</head>
+
+	<body>
+		<div id="container1">
+			<h1 id="top">Russian Roulette</h1>
+			<img id='loading' src="imgs/gun.png">
+
+			<h1 id="start">Start</h1>
+		</div>
+
+		<form name="fuoco">
+			<h1 id="number-of-bullets" class="fade-out">How many bullets?</h1>
+			<input name="proiettili" type="text" value="1">
+			<input name="messaggio" type="button" value="Gira la Roulette!" onClick="spara()">
+		</form>
+		
+	<script>
+
+
+		$(document).ready(function(){
+			
+			let sopravvissuto=0;
+		    $('#start').click(function(){
+		        $('#loading').addClass('spin');
+				$('#top').addClass('went-up');
+				
+
+				setTimeout(function(){
+					$('#container1').addClass('fade-out');
+					
+					setTimeout(function(){
+						$('#container1').remove();
+						$('#number-of-bullets').removeClass('fade-out');
+					},1000)
+						
+				},500)
+					
+		    })
+		
+		})
+
+		function spara(){
+			let giro=Math.floor(Math.random()*6)
+			if(parseInt(document.fuoco.proiettili.value) < 7 && parseInt(document.fuoco.proiettili.value) > 0){
+
+				if (giro <= document.fuoco.proiettili.value-1){
+					sopravvissuto=0;
+					alert("Bang. Morto!");
+				} 
+
+				else{
+					//document.fuoco.messaggio.value="Sei fortunato!"
+					sopravvissuto++
+					alert("Sei fortunato! Sei sopravvisuto a "+sopravvissuto+" giri!");
+					setTimeout("document.fuoco.messaggio.value='Gira la Roulette'",1000)
+				}
+			}
+			else alert("Numero di proiettili invalido!");
+		}
+	</script>
+	</body>
+</html>
