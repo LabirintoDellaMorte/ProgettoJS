@@ -38,3 +38,7 @@ h1{
     border: 2px solid #2173D8;
     margin: auto;
 }
+img{
+    height: 100px;
+    width: 100px;
+}

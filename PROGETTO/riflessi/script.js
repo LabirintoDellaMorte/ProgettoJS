@@ -1,13 +1,24 @@
 $(document).ready(function(){
 
     let bar = new Audio('sounds/metalPipe.mp3');
-    /*let sottofondo = new Audio('sounds/TheEncounter.mp3');
+    let sottofondo = new Audio('sounds/TheEncounter.mp3');
 
-    //parte musica di sottofondo
-    sottofondo.autoplay = true;
-    sottofondo.load();
-    sottofondo.loop = true;*/
-
+    //se l'utente preme il bottone del volume parte musica di sottofondo
+    let acceso = false;
+    $("#volume").click(function(){
+        if(!acceso){
+            sottofondo.play();
+            sottofondo.loop = true;
+            $("#volume").attr('src', 'on.jpg');
+            acceso = true;
+        }
+        else {
+            sottofondo.pause();
+            $("#volume").attr('src', 'off.jpg');
+            acceso = false;
+        }
+    })
+    
     // seleziona il tag body
     const body = document.getElementById("pagina");
 
@@ -80,16 +91,16 @@ $(document).ready(function(){
     }
 
     function randomColor(){
-        //sottofondo.stop();
+        sottofondo.pause();
         bar.play();
-
-       /* setTimeout(function () {
-            sottofondo.play();
-        }, 3500);*/
+        if(acceso){
+            setTimeout(function () {
+                sottofondo.play();
+            }, 3000);
+        }
 
         $("#stop").css("backgroundColor", colors[Math.floor((Math.random()*13))]);
         startTime=new Date();
-        
     }
 
     function remark(e){
