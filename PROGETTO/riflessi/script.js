@@ -12,6 +12,7 @@ $(document).ready(function(){
             $("#volume").attr('src', 'on.jpg');
             acceso = true;
         }
+        
         else {
             sottofondo.pause();
             $("#volume").attr('src', 'off.jpg');
