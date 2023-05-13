@@ -1,6 +1,11 @@
 let timer = 120;
 
+    let sottofondo = new Audio('home/sounds/home.mp3');  
+
     $(document).ready(function(){
+
+        sottofondo.autoplay = true;
+        sottofondo.load();
 
         $('img').addClass('fade-out');
         caricamento();
