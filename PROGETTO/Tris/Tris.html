@@ -150,7 +150,12 @@
 	
 	$(document).ready(function(){
 		
-
+		//variabili audio
+		let vinto = new Audio('sounds/win.mp3');
+		let perso = new Audio('sounds/lose.mp3');
+		let scelta_mario = new Audio('sounds/scelta_mario.mp3');
+		let scelta_utente = new Audio('sounds/scelta_utente.mp3');
+		let pareggio = new Audio('sounds/pareggio.mp3');
 	
 		//variabili
 		let caselle = document.getElementsByTagName("td");
@@ -192,6 +197,7 @@
 				{
 					if(titolo.innerHTML=="YOUR TURN") 
 					{
+						scelta_utente.play();
 						titolo.innerHTML="NOT YOUR TURN";
 						e.target.innerHTML="X";
 						$(e.target).removeClass('clickable');
@@ -216,6 +222,7 @@
 						console.log(sceltaMario);
 					}while(caselle[sceltaMario].innerHTML!=""); 
 
+					scelta_mario.play();
 					caselle[sceltaMario].innerHTML="O";
 					$(caselle[sceltaMario]).removeClass('clickable');
 					titolo.innerHTML="YOUR TURN";
@@ -278,11 +285,13 @@
 					if(winner == 'X'){
 						$('#result').html('YOU WON');
 						$("#imgFine").attr('src', 'imgs/win.jpg');
+						vinto.play();
 					}	
 				
 					else {
 						$('#result').html('YOU LOST');
 						$("#imgFine").attr('src', 'imgs/troll.PNG');
+						perso.play();
 					}
 				},1000);
 				
@@ -303,6 +312,7 @@
 					setTimeout(function(){
 						$('#result').html('TIE');
 						$("#imgFine").attr('src', 'imgs/pareggio.jpg');
+						pareggio.play();
 					},1000);
 				}
 			}
