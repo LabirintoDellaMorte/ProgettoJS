@@ -2,6 +2,7 @@ body{
     text-align: center;
     overflow: hidden;
     font-family: 'RussianRoulette';
+    background-image: url('imgs/blood.jpg');
 }
 @font-face {
     font-family: RussianRoulette;
@@ -9,25 +10,29 @@ body{
 }
 
 h1{
-    
     font-size: 80pt;
     margin: 0;
     font-weight: normal;
+    transition: opacity 0.8s ease-in;
 }
 
 #top{
     position: relative;
     top: 0%;
-    transition: top 1s ease-in;
 }
 #number-of-bullets{
+    margin-top: 30px;
+}
+
+#drum{
+    width: 250px;
     margin-top: 300px;
-    transition: opacity 1s ease-in;
+    transition: opacity 0.8s ease-in;
 }
 
 #loading{
     width: 40%;
-    transition: transform 0.7s ease-in, opacity 0.8s ease-in;
+    transition: transform 0.5s ease-in, opacity 0.2s ease-in;
 }
 
 #container1{

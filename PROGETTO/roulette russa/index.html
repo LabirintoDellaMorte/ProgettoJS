@@ -16,9 +16,11 @@
 
 			<h1 id="start">Start</h1>
 		</div>
-
+		
+		<img id="drum" class="fade-out" src="imgs/Tamburo.png">
 		<form name="fuoco">
 			<h1 id="number-of-bullets" class="fade-out">How many bullets?</h1>
+			
 			<input name="proiettili" type="text" value="1">
 			<input name="messaggio" type="button" value="Gira la Roulette!" onClick="spara()">
 		</form>
@@ -31,7 +33,7 @@
 			let sopravvissuto=0;
 		    $('#start').click(function(){
 		        $('#loading').addClass('spin');
-				$('#top').addClass('went-up');
+				$('h1').addClass('fade-out');
 				
 
 				setTimeout(function(){
@@ -39,6 +41,7 @@
 					
 					setTimeout(function(){
 						$('#container1').remove();
+						$('#drum').removeClass('fade-out');
 						$('#number-of-bullets').removeClass('fade-out');
 					},1000)
 						
