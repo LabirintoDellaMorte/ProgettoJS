@@ -155,7 +155,7 @@
 		let perso = new Audio('sounds/lose.mp3');
 		let scelta_mario = new Audio('sounds/scelta_mario.mp3');
 		let scelta_utente = new Audio('sounds/scelta_utente.mp3');
-		let pareggio = new Audio('sounds/pareggio.mp3');
+		let pari = new Audio('sounds/pareggio.mp3');
 	
 		//variabili
 		let caselle = document.getElementsByTagName("td");
@@ -312,28 +312,24 @@
 					setTimeout(function(){
 						$('#result').html('TIE');
 						$("#imgFine").attr('src', 'imgs/pareggio.jpg');
-						pareggio.play();
+						pari.play();
 					},1000);
 				}
 			}
 		}
 		
+		$('#reset').click(function(){
+			resetTotale();
+		});
 
-			$('#reset').click(function(){
-				resetTotale();
-			});
-
-			$('#close').click(function(){
-				let myWindow = window.open("", "_self");
-   				myWindow.close();
-			});
-		
-			
-		
+		$('#close').click(function(){
+			let myWindow = window.open("", "_self");
+			myWindow.close();
+		});
+	
 		function resetTotale() {
 			location.reload();
 		}
-
 	});
     </script>
 </body>
