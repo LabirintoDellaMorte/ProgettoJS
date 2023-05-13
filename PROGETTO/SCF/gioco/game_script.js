@@ -11,6 +11,8 @@ $(document).ready(function () {
     let sasso = new Audio('sounds/sasso.mp3');
     let carta = new Audio('sounds/carta.mp3');
     let forbice_carta = new Audio('sounds/forbice_carta.mp3');
+    let carta_sasso = new Audio('sounds/carta_sasso.mp3');
+    let sasso_forbice = new Audio('sounds/sasso_forbice.mp3');
 
     //variabili
     let sceltaMario;
@@ -22,7 +24,6 @@ $(document).ready(function () {
         setTimeout( function(){
             $('#game').remove();
         },1500) 
-        
     })
     
     //---------Assegno un valore alla variabile sceltaUtente in base a quello che l'utente appunto sceglie premento gli appositi bottoni 0=sasso, 1=carta, 2=forbici----------
@@ -69,22 +70,31 @@ $(document).ready(function () {
             $("#risultato").text("PAREGGIO!");
             setTimeout( function(){
                 pareggio.play();
-            },1500) 
+            },1500);
         }
         else{
             if(sceltaMario == 0 && sceltaUtente == 1){
                 $("#risultato").text("HAI VINTO!");
                 punteggioUtente++;
+                setTimeout( function(){
+                    carta_sasso.play();
+                },1500); 
             }
             else{
                 if(sceltaMario == 0 && sceltaUtente == 2){
                     $("#risultato").text("HAI PERSO!");
                     punteggioMario++;
+                    setTimeout( function(){
+                        sasso_forbice.play();
+                    },1500);
                 }
                 else{
                     if(sceltaMario == 1 && sceltaUtente == 0){
                         $("#risultato").text("HAI PERSO!");
                         punteggioMario++;
+                        setTimeout( function(){
+                            carta_sasso.play();
+                        },1500); 
                     }
                     else{
                         if(sceltaMario == 1 && sceltaUtente == 2){
@@ -99,6 +109,9 @@ $(document).ready(function () {
                             if(sceltaMario == 2 && sceltaUtente == 0){
                                 $("#risultato").text("HAI VINTO!");
                                 punteggioUtente++;
+                                setTimeout( function(){
+                                    sasso_forbice.play();
+                                },1500);
                             }
                             else{
                                 if(sceltaMario == 2 && sceltaUtente == 1){
