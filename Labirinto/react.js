@@ -329,9 +329,10 @@
                 var i=0;
                 while (miniGiochi[randomNumber]==null && i<7) {
                     var randomNumber = Math.floor(Math.random() * 5);
-                    i++;
+                    
                 }
-                if (i<6)    {
+                if (i<5)    {
+                    i++;
                     var redirect = "../PROGETTO/" + miniGiochi[randomNumber] + "/" + miniGiochi[randomNumber] + ".html";
                     miniGiochi.splice(randomNumber, 1);
                 }
@@ -512,6 +513,7 @@
                 if (event.key === 'Enter' && dialog == true) {
                     if (i>6) { 
                         window.open("../PROGETTO/home/HOME_ani.html");
+                        close();
                     }
                     // Chiudo l'alert
                     alertDiv.remove();
