@@ -1,0 +1,101 @@
+body{
+    background-color: #F9FBFF;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+#result{
+    
+    position: relative;
+    top:450px;
+    font-size: 60pt;
+}
+
+td{
+    
+    border: collapse;
+    border-radius: 48px;	/* il border radius non e' lo stesso della tabella perche' negli angoli da un effetto brutto */
+    text-align:center;
+    height: 130px;
+    width: 130px;
+    font-size: 60pt;
+    background-color: #F9FBFF;
+}
+
+tr{
+    border: none;
+}
+
+table{
+    border-radius: 50px;
+    margin: 0 auto;
+    background-color: black;
+    position: fixed;
+    right: 0;
+    left: 0;
+    -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.3));
+                  
+}
+#titolo{
+    transition: top 1s ease-out;
+    margin: 0;
+    font-weight: normal;
+    font-size: 55pt;
+    position: relative;
+}
+table, #tit{
+    transition: opacity 1s ease-in-out; 
+}
+
+#reset, #close{
+    position: fixed;
+    bottom: 0;
+}
+#reset{
+    transition: left 0.8s ease-out;
+}
+#close{
+    transition: right 0.8s ease-out;
+}
+#tit{
+    position: relative;
+}
+
+.clickable{
+    transition: background-color 0.3s ease-in-out;
+}
+
+.clickable:hover{
+    background-color: red;
+}
+
+.fade-out{
+    opacity: 0;
+}
+.fade-in{
+    opacity: 1;
+}
+
+.is-up{
+    top: -500px;
+}
+.came-down{
+    top: -120px;
+}
+
+.is-left{
+    left: -500px;
+}
+.came-right{
+    left: 0px;
+}
+
+.is-right{
+    right: -500px;
+}
+.came-left{
+    right: 0px;
+}
