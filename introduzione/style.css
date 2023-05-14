@@ -1,0 +1,26 @@
+body{
+    background-color: black;
+    overflow: hidden;
+}
+
+#stupito, #corsa{
+    transition: opacity 1s ease-in;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#stupito{
+    bottom: -30%;
+}
+
+#corsa{
+    bottom: -20%;
+    height: 100%;
+}
+
+.fade-out{
+    opacity: 0;
+}

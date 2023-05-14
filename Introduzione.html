@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="introduzione/style.css">
+    
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="introduzione/script.js"></script>
+    </head>
+
+    <body>
+        <h1>Oh</h1>
+
+        <img id="stupito" class="fade-out" src="introduzione/imgs/fillo-stupito.gif">
+        <img id="corsa" class="fade-out" src="introduzione/imgs/fillo-corsa.gif">
+
+
+        <script>
+
+            $(document).ready(function(){
+
+                let ohNo = new Audio('introduzione/sounds/OHno.mp3');
+                let run = new Audio('introduzione/sounds/run.mp3');
+                let first = true;
+                
+                $(document).click(function(){
+
+                    $('#stupito').removeClass('fade-out');
+                        if(first){
+
+                            first = false;
+                            ohNo.play();
+                            setTimeout(function(){
+                                $('#stupito').addClass('fade-out');
+
+                                setTimeout(function(){
+
+                                    $('#corsa').removeClass('fade-out');
+                                    run.play();
+
+                                    setTimeout(function(){
+                                        window.open('Labirinto/Maze_.html');
+                                    },1300)
+
+                                },1000);
+                            }, 2000);
+                        }
+                })
+
+            })
+        </script>
+    </body>
+
+</html>
+    
+   
