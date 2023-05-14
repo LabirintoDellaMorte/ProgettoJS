@@ -5,6 +5,9 @@ $(document).ready(function () {
         document.getElementById("space").innerHTML += "<br>";
     }               
     
+    /* appare il body */
+    $('body').removeClass('fade-out');
+
     //variabili audio
     let forbici = new Audio('sounds/forbici.mp3');
     let pareggio = new Audio('sounds/pareggio.mp3');
@@ -21,8 +24,12 @@ $(document).ready(function () {
     let punteggioUtente = 0;
 
     $('.butt').click(function(){/* al click su un pulsante tutto viene sovrascritto con il risultato*/
+
+    $('#game').addClass('fade-out');
+
         setTimeout( function(){
             $('#game').remove();
+            $('#result').removeClass('fade-out');
         },1500) 
     })
     
@@ -130,7 +137,12 @@ $(document).ready(function () {
                             
         $("#reset").click(function(){
 
-            location.reload(true);  /* premendo ricomincia si ricarica la pagina */                        
+            $('body').addClass('fade-out');
+
+            setTimeout(function(){
+                location.reload(true);  /* premendo ricomincia si ricarica la pagina */
+            },1500)
+                                        
         })
     }
     

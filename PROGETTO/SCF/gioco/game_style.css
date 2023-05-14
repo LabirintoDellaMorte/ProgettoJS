@@ -7,6 +7,11 @@ body{
     background-color: black;
     color: white;
     overflow: hidden;
+    transition: opacity 1.4s ease-out;
+}
+
+.fade-out{
+    opacity: 0;
 }
 
 div{
@@ -32,8 +37,13 @@ div{
     border-radius: 121px;              
 }
 
+#game{
+    transition: opacity 1.3s ease-out;
+}
+
 #result{
     text-align: center;
+    transition: opacity 2s ease-out;
 }
 
 #scelte{
