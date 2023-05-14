@@ -84,10 +84,11 @@
         image_win.src = "Win.png";*/
 
         const image_wall = loadImage("WallTile.png");
-        const image_floor = loadImage("FloorTile.png");
         const image_player = loadImage("Player.png");
         const image_enemy = loadImage("Enemy.png");
         const image_win = loadImage("Win.png");
+
+        var miniGiochi = ["RR", "Tris", "RIFLESSI", "Memory", "SCF"];
 
         //Function that creates the squares (stessa funzione usata negli altri due esempi di canvas)
         function object (image, x, y, width, height) {
@@ -112,7 +113,7 @@
         let maze1 = [
         [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, -1, 1],
         [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1],
         [1, 0, 1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
         [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
@@ -134,7 +135,7 @@
         [0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0],
         [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
         [1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1],
-        [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+        [1, 1, 1, 0, 0, -1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
         [0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0],
         [1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
@@ -166,7 +167,7 @@
             playerX_now;
 
         //Array che salveranno ogni muro, nemico ecc..., mi serve salvarli per controllare le eventuali collisioni con il player
-        var wall=[], floor=[], enemy=[], win=[], player_;
+        var wall=[], enemy=[], win=[], player_;
         
         function drawMaze() {
             
@@ -181,12 +182,8 @@
 
                 if (maze[y][x] === 1) {
 
+                    //Paint it red of 1s
                     wall.push(new object(image_wall, x*blockSize, y*blockSize, blockSize, blockSize));
-                }
-                else if (maze[y][x] === 0) {
-
-                    floor.push(new object(image_floor, x*blockSize, y*blockSize, blockSize, blockSize));
-
                 }
                 else if (maze[y][x] === -1) {
 
@@ -273,13 +270,13 @@
             player.y = playerY_now;
             drawMaze();
         };
-        if (checkCollisionEnemy(player_, enemy, "Hai scontrato un nemico, ora gioca bastardo!") == true) {
+        if (checkCollisionEnemy(player_, enemy, "Hai scontrato un nemico, ora gioca Fillo conta su di te!") == true) {
             player.x = playerX_now;
             player.y = playerY_now;
             drawMaze();
         };
         
-        if (checkCollisionWin(player_, win, "VITTORIAA! IL MIGLIORE!") == true) {
+        if (checkCollisionWin(player_, win, "HAI RAGGIUNTO L'USCITA, FILLO HA RECUPERATO!") == true) {
             player.x = playerX_now;
             player.y = playerY_now;
             drawMaze();
@@ -309,7 +306,7 @@
                     // Avvia la riproduzione
                     audio.play();
                     
-                const alertDiv = document.createElement('div');
+                var alertDiv = document.createElement('div');
                 alertDiv.innerHTML = message;
 
                 var dialogOpen = true;
@@ -323,8 +320,8 @@
                 alertDiv.style.backgroundColor = 'antiquewhite';
                 alertDiv.style.fontFamily = 'Arcade1';
                 alertDiv.style.position = 'fixed';
-                alertDiv.style.bottom = '620px';
-                alertDiv.style.right = '450px';
+                alertDiv.style.top = '5%';
+                alertDiv.style.right = '31%';
                 alertDiv.style.zIndex = '9999';
                 alertDiv.style.animation = 'slideIn 1s ease-in-out forwards';
                 alertDiv.style.display = 'flex'; // Abilita il layout Flexbox
@@ -335,25 +332,55 @@
                 okButton.innerText = 'OK';
                 okButton.style.marginTop = '10px';
                 okButton.style.alignSelf = 'center';
+                //Immagine di fillo pazzo mentale
+                var img_fillo = document.createElement('img');
+                img_fillo.src="FilloPazzo.png";
+
+                var randomNumber = Math.floor(Math.random() * 5);
+                var i=0;
+                while (miniGiochi[randomNumber]==null && i<7) {
+                    var randomNumber = Math.floor(Math.random() * 5);
+                    i++;
+                }
+                if (i<6)    {
+                    var redirect = "../PROGETTO/" + miniGiochi[randomNumber] + "/" + miniGiochi[randomNumber] + ".html";
+                    miniGiochi.splice(randomNumber, 1);
+                }
+                else {
+                    alertDiv.innerHTML = "FURBACCHIONE!, hai già giocato tutti i minigiochi. Se non sai cosa fare picchia Denti";
+                    alertDiv.style.height = '80px';
+                    img_fillo.src="MarcoPazzo.png";
+                    img_fillo.style.marginTop = "-100px";
+                }
+
                 // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
                 document.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter' && dialogOpen == true) {
-                    window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
+                    if (i<6) {
+                        window.open (redirect); // Reindirizza ad un gioco dopo la pressione del pulsante OK
+                    }
+                    
                     // Chiudi l'alert
                     alertDiv.remove();
                     okButton.remove();
+                    img_fillo.remove();
                     dialogOpen = false;
                 }
                 });
                 // Aggiunge l'evento di clic per il pulsante OK
                 okButton.addEventListener('click', function() {
-                    window.open ("https://www.google.com"); // Reindirizza a Google dopo la pressione del pulsante OK
+                    if (i<6) {
+                        window.open (redirect); // Reindirizza ad un gioco dopo la pressione del pulsante OK
+                    }
+
                 alertDiv.remove(); // Rimuove l'elemento alertDiv
                 okButton.remove(); // Rimuove il pulsante okButton
+                img_fillo.remove();
                 dialogOpen = false;
                 });
                 // Aggiunge il pulsante OK all'alert personalizzato
                 alertDiv.appendChild(okButton);
+                alertDiv.appendChild(img_fillo);
                 // Aggiunge l'alert personalizzato al body del documento
                 document.body.appendChild(alertDiv);
 
@@ -384,8 +411,8 @@
                 alertDiv.style.backgroundColor = 'antiquewhite';
                 alertDiv.style.fontFamily = 'Arcade1';
                 alertDiv.style.position = 'fixed';
-                alertDiv.style.bottom = '620px';
-                alertDiv.style.right = '450px';
+                alertDiv.style.top = '5%';
+                alertDiv.style.right = '31%';
                 alertDiv.style.zIndex = '9999';
                 alertDiv.style.animation = 'slideIn 1s ease-in-out forwards';
                 alertDiv.style.display = 'flex'; // Abilita il layout Flexbox
@@ -396,21 +423,28 @@
                 okButton.innerText = 'OK';
                 okButton.style.marginTop = '10px';
                 okButton.style.alignSelf = 'center';
+                //Immagine di fillo pazzo mentale
+                const img_fillo = document.createElement('img');
+                img_fillo.src="FilloPazzo.png";
+                img_fillo.style.marginTop = '16px';
                 // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
                 document.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') {
                     // Chiudi l'alert
                     alertDiv.remove();
                     okButton.remove();
+                    img_fillo.remove();
                 }
                 });
 
                 okButton.addEventListener('click', function() {
                     alertDiv.remove(); // Rimuove l'elemento alertDiv
                     okButton.remove(); // Rimuove il pulsante okButton
+                    img_fillo.remove();
                 });
                 // Aggiunge il pulsante OK all'alert personalizzato
                 alertDiv.appendChild(okButton);
+                alertDiv.appendChild(img_fillo);
                 // Aggiunge l'alert personalizzato al body del documento
                 document.body.appendChild(alertDiv);
 
@@ -425,7 +459,7 @@
                 if (collides(player_, wall[i])) {
 
                     // Crea l'elemento audio
-                    const audio = new Audio('Vittoria.mp3');
+                    let audio = new Audio('Vittoria.mp3');
                     // Avvia la riproduzione
                     audio.play();
 
@@ -434,34 +468,60 @@
                 const alertDiv = document.createElement('div');
                 alertDiv.innerHTML = message;
 
-                // Aggiunge il CSS per lo stile dell'alert
-                alertDiv.style.padding = '10px';
+               // Aggiunge il CSS per lo stile dell'alert
+               alertDiv.style.padding = '10px';
                 alertDiv.style.height = '60px';
                 alertDiv.style.width = '500px';
                 alertDiv.style.border = '1px solid #ccc';
                 alertDiv.style.borderRadius = '5px';
-                alertDiv.style.backgroundColor = '#90EE90';
+                alertDiv.style.backgroundColor = '#98FF98';
                 alertDiv.style.fontFamily = 'Arcade1';
                 alertDiv.style.position = 'fixed';
-                alertDiv.style.bottom = '620px';
-                alertDiv.style.right = '450px';
+                alertDiv.style.top = '5%';
+                alertDiv.style.right = '31%';
                 alertDiv.style.zIndex = '9999';
                 alertDiv.style.animation = 'slideIn 1s ease-in-out forwards';
                 alertDiv.style.display = 'flex'; // Abilita il layout Flexbox
                 alertDiv.style.flexDirection = 'column'; // Imposta la direzione del layout Flexbox
+                //Immagine di fillo pazzo mentale
+                const img_fillo = document.createElement('img');
+                img_fillo.src="Fillo_win.png";
+                img_fillo.style.marginTop = '28px';
                 // Crea un pulsante OK per l'alert
                 const okButton = document.createElement('button');
                 okButton.style.fontFamily = 'Arcade';
                 okButton.innerText = 'OK';
                 okButton.style.marginTop = '10px';
                 okButton.style.alignSelf = 'center';
+
+                var randomNumber = Math.floor(Math.random() * 5);
+                var i=0;
+                while (miniGiochi[randomNumber]==null && i<7) {
+                    var randomNumber = Math.floor(Math.random() * 5);
+                    i++;
+                }
+                if (i<6)    {
+                    alertDiv.innerHTML="Hai provato ad uscire dal labirinto senza completare i giochi, guardati le spalle";
+                    alertDiv.style.backgroundColor="#03342e";
+                    alertDiv.style.color="white";
+                    alertDiv.style.height = "80px";
+                    audio.pause();
+                    audio = new Audio ("Scary.mp3");
+                    audio.play();
+                }
+
                 // Aggiungi un event listener per la pressione del tasto "invio" sull'intero documento
                 document.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter' && dialog == true) {
-                    window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
+                    if (i>6) { 
+                        window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
+                        window.open("../PROGETTO/home/HOME_ani.html");
+                    }
+                    
                     // Chiudi l'alert
                     alertDiv.remove();
                     okButton.remove();
+                    img_fillo.remove();
                     dialog = false;
                     
                 }
@@ -470,10 +530,12 @@
                     window.open("https://www.youtube.com/watch?v=BLFa--7LGMo&ab_channel=EricaSpano");
                     alertDiv.remove(); // Rimuove l'elemento alertDiv
                     okButton.remove(); // Rimuove il pulsante okButton
+                    img_fillo.remove();
                     dialog = false;
                 });
                 // Aggiunge il pulsante OK all'alert personalizzato
                 alertDiv.appendChild(okButton);
+                alertDiv.appendChild(img_fillo);
                 // Aggiunge l'alert personalizzato al body del documento
                 document.body.appendChild(alertDiv);
 
