@@ -1,0 +1,32 @@
+body {
+    background-color:  black;
+}
+canvas {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: black;
+}
+div {
+    margin: auto;
+}
+
+@font-face {
+font-family: 'Arcade';
+src: url('ARCADE.ttf');
+}
+
+@font-face {
+font-family: 'Arcade1';
+src: url('Arcade1.ttf');
+}
+
+.my-custom-font {
+font-family: 'Arcade1','Arcade', sans-serif;
+font-size: 16px;
+font-weight: 400;
+background-color: antiquewhite;
+}
