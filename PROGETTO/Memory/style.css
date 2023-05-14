@@ -1,0 +1,73 @@
+body{
+    margin: 0;
+    overflow:hidden;
+    background-image: url("Sfondo.png");
+    background-size: cover;
+    background-attachment: fixed;   /* allo zoom della scheda lo sfondo rimane della stessa dimensone */
+    box-shadow: inset 0 0 200px 200px;
+}
+
+table{
+    border-spacing: 10px;
+    margin: 0 auto;
+    /* centrare verticalmente la table */
+    position: relative;
+    top: 50%;                       /* sposta la tabella verso il basso del 50% della sua altezza originale rispetto alla posizione relativa*/
+    transform: translateY(-50%);    /* sposta la tabella verso l'alto di metà della sua altezza */
+    transition: opacity 1s ease-in-out;
+}
+
+img{
+    border-radius: 8px;
+    transition: opacity 1s ease-in-out;
+}
+
+
+.card{
+    box-shadow: 0 0 20px 3px;    /* ombra orizzontale, ombra verticale, sfocatura, spread radius */
+    transition: width 0.1s, height 0.1s;    /* non funziona */
+}
+.card:hover{
+    box-shadow:0 0 20px 10px #eab676;
+    width: 97%;
+    height: 97%;
+}
+
+td{
+    text-align: center;
+}
+
+.start-win{
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#start{
+    width: 20%;
+    height: 20%;
+    transition: opacity 0.8s ease-in-out, width 0.2s, height 0.2s;
+}
+#start:hover{
+
+    width: 23%;
+    height: 23%;
+}
+
+#win{
+    width: 40%;
+    height: 40%;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
